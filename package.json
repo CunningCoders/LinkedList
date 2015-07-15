@@ -1,0 +1,19 @@
+{
+  "name": "linkedlist",
+  "version": "1.0.0",
+  "description": "Platform for dev-to-dev collaboration.",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CunningCoders/LinkedList.git"
+  },
+  "author": "CunningCoders [https://github.com/CunningCoders]",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/CunningCoders/LinkedList/issues"
+  },
+  "homepage": "https://github.com/CunningCoders/LinkedList#readme"
+}
