@@ -12,13 +12,14 @@
     <script src="app/profile/profile.ctrl.js"></script>
   </head>
   <body ng-app='app'>
-    <a ui-sref='createJob'>Create Job</a>
-    <br/>
-    <a ui-sref='findJobs'>Find Job</a>
-    <br/>
-    <a ui-sref='profile'>My Profile</a>
-    <br/>
-    <a ui-sref='homepage'>Home</a>
+    <nav>
+        <div id='linkedlistlogo'>
+            <h3><a ui-sref='homepage'>LinkedList</a></h3>
+        </div>
+        <a ui-sref='createJob'>Create Job</a>
+        <a ui-sref='findJobs'>Find Job</a>
+        <a ui-sref='profile'>My Profile</a>
+    </nav>
     <div ui-view></div>
   </body>
 
