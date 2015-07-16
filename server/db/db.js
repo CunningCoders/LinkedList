@@ -29,7 +29,7 @@ var initTables = function() {
   ); 
   createUsersTable.on('end', function() {
     var createJobsTable = client.query(
-    'CREATE TABLE jobs(title VARCHAR(20), ownerID int references users(id), description VARCHAR(255), Skills VARCHAR(100), Coworkers VARCHAR(100))'
+    'CREATE TABLE jobs(id SERIAL PRIMARY KEY, title VARCHAR(20), ownerID int references users(id), description VARCHAR(255), skills VARCHAR(100), coworkers VARCHAR(100))'
     );
       console.log('Creating Tables')
       client.end();
@@ -79,4 +79,30 @@ var testUser = function() {
   })
 }
 
+var addJob = function(job) {
+  var connectionString = process.env.DATABASE_URL || 'postgres://localhost:5432/linkedlist';
+  var client = new pg.Client(connectionString);
+  client.connect()
+
+  var insertJob = client.query(
+    "INSERT INTO jobs (title, ownerID, description, skills, coworkers) VALUES ('"+job.title+"',"+"(SELECT id from users WHERE username='"+job.owner+"')"+",'"+job.description+"','"+job.skills+"','"+job.coworkers+"')"
+  );
+  insertJob.on('end', function() { 
+    console.log('Adding Job')
+    client.end();
+  });
+}
+
+var testJob = function() {
+  addJob({
+    title: 'Pro Dev',
+    owner: 'Not Colin',
+    description: 'Browse reddit, eat catered snacks, play Hearthstone',
+    skills: 'Frontend, Javascript, Mithril',
+    coworkers: 'Wes, Brittney, John, Zach'
+  })
+}
+
 initDB();
+// testJob()
+// testUser();
