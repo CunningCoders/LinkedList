@@ -1,14 +1,17 @@
-<html>
+<!DOCTYPE html>
+<html ng-app='app'>
+  <head>
+    <meta charset="utf-8" />
+    <title>Linked List</title>
+  </head>
   <body>
-
-  <div>
-    <h1> Current Jobs </h1>
+  <div ng-view>
   </div>
-
-  <div>
-    <h1> Pending Jobs </h1>
-  </div>
-
+  <script src="bower_components/angular/angular.min.js"></script>
+  <script src="bower_components/angular-ui-router/angular-ui-router.min.js"></script>
+  <script src="app/app.js"></script>
+  <script src="app/createJob/createJob.ctrl.js"></script>
+  <script src="app/jobDetails/jobDetails.ctrl.js"></script>
   </body>
 
 </html>
