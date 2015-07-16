@@ -1,5 +1,5 @@
-angular.module('app.profile', []) 
+angular.module('app') 
 
-.controller('profileController', function($scope, profileFactory) {
-	$scope.test = "stop all the downloadin"
+.controller('profileController', function($scope) {
+	$scope.test = "stop all the downloadin (Profile View)"
 })

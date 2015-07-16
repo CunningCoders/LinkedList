@@ -1,41 +1,33 @@
-angular.module('app', [
-  'app.createJob',
-  'app.findJobs',
-  'app.jobDetails',
-  'app.profile',
-  'app.homepage',
-  'ui.router'
-])//Each view's module needs to be pulled in here, along with other dependencies
+angular.module('app', ['ui.router'])
 
-.config(function($stateProvider, $urlRouterProvider){
+.config(['$stateProvider', '$urlRouterProvider', function($stateProvider, $urlRouterProvider){
 
-  $urlRouterProvider.otherwise("/"); //Re-route unknown to homepage
+  $urlRouterProvider.otherwise("/homepage"); //Re-route unknown to homepage
 
   $stateProvider
     .state('createJob', {
       url: '/createJob',
-      templateUrl: 'createJob/createJob.html',
-      controller: 'createJob/createJob.ctrl.js'
+      templateUrl: 'app/createJob/createJob.html',
+      controller: 'createJobController'
     })
     .state('findJobs', {
       url: '/findJobs',
-      templateUrl: 'findJobs/findJobs.html',
-      controller: 'findJobs/findJobs.ctrl.js'
+      templateUrl: 'app/findJobs/findJobs.html',
+      controller: 'findJobsController'
     })
     .state('jobDetails', {
       url: '/jobDetails',
-      templateUrl: 'jobDetails/jobDetails.html',
-      controller: 'jobDetails/jobDetails.ctrl.js' 
+      templateUrl: 'app/jobDetails/jobDetails.html',
+      controller: 'jobDetailsController' 
     })
     .state('profile', {
       url: '/profile',
-      templateUrl: 'profile/profile.html',
-      controller: 'profile/profile.ctrl.js'
+      templateUrl: 'app/profile/profile.html',
+      controller: 'profileController'
     })
     .state('homepage', {
-      url: '/', 
-      templateUrl: 'homepage/homepage.html',
-      controller: 'homepage/homepage.ctrl.js'
+      url: '/homepage', 
+      templateUrl: 'app/homepage/homepage.html'
     })
-})
+}])
 //authentication checking here? Like in shortly-angular.

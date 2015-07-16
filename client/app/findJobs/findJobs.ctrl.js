@@ -1,5 +1,5 @@
-angular.module('app.findJobs', [])
+angular.module('app')
 
-.controller('findJobsController', function($scope, findJobsFactory) {
-	$scope.test = "hey kid! i'm a computer"
+.controller('findJobsController', function($scope) {
+	$scope.test = "hey kid! i'm a computer (Find Jobs View)"
 })
