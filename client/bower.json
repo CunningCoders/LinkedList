@@ -1,0 +1,27 @@
+{
+  "name": "linkedList",
+  "version": "1.0.0",
+  "homepage": "https://github.com/CunningCoders/LinkedList",
+  "authors": [
+    "CunningCoders <https://github.com/CunningCoders>"
+  ],
+  "description": "Platform for dev-to-dev collaboration.",
+  "main": "app/app.js",
+  "moduleType": [
+    "amd",
+    "globals",
+    "node"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-ui-router": "~0.2.15",
+    "angular": "~1.4.3"
+  }
+}
