@@ -87,13 +87,26 @@ var getJobs = function(filter, value){
   if (filter === undefined) {
     requestDB(
       "SELECT * FROM jobs",
-      function(results){console.log(results)}
+      function(results){return results}
     )
   } else {
     requestDB(
       "SELECT * FROM jobs WHERE "+filter+" = '"+value+"'",
+      function(results){return results}
+    )
+  }
+}
+
+var getUsers = function(filter, value){
+  if (filter === undefined) {
+    requestDB(
+      "SELECT * FROM users",
+      function(results){console.log(results)}
+    )
+  } else {
+    requestDB(
+      "SELECT * FROM users WHERE "+filter+" = '"+value+"'",
       function(results){
-        console.log('callback')
         console.log(results)}
     )
   }
@@ -121,6 +134,4 @@ var testJob = function() {
   })
 }
 
-// resetDB();
-// testJob()
-// testUser();
+initDB();
