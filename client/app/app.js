@@ -24,7 +24,12 @@ angular.module('app', ['ui.router'])
     .state('jobDetails', {
       url: '/jobDetails',
       templateUrl: 'app/jobDetails/jobDetails.html',
-      controller: 'jobDetailsController'
+      controller: 'jobDetailsController',
+      resolve: {
+        job: ['$rootScope',function ($rootScope){
+          return $rootScope.selectedProject;
+        }]
+      } 
     })
     .state('profile', {
       url: '/profile',
