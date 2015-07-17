@@ -1,4 +1,4 @@
-angular.module('app', [])
+angular.module('app.createJob', [])
 
 .factory('createJobFactory', function(){
 	// return {

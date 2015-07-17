@@ -1,17 +1,26 @@
 <!DOCTYPE html>
-<html ng-app='app'>
+<html>
   <head>
     <meta charset="utf-8" />
     <title>Linked List</title>
+    <script src="bower_components/angular/angular.min.js"></script>
+    <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+    <script src="app/app.js"></script>
+    <script src="app/createJob/createJob.ctrl.js"></script>
+    <script src="app/findJobs/findJobs.ctrl.js"></script>
+    <script src="app/jobDetails/jobDetails.ctrl.js"></script>
+    <script src="app/profile/profile.ctrl.js"></script>
   </head>
-  <body>
-  <div ng-view>
-  </div>
-  <script src="bower_components/angular/angular.min.js"></script>
-  <script src="bower_components/angular-ui-router/angular-ui-router.min.js"></script>
-  <script src="app/app.js"></script>
-  <script src="app/createJob/createJob.ctrl.js"></script>
-  <script src="app/jobDetails/jobDetails.ctrl.js"></script>
+  <body ng-app='app'>
+    <nav>
+        <div id='linkedlistlogo'>
+            <h3><a ui-sref='homepage'>LinkedList</a></h3>
+        </div>
+        <a ui-sref='createJob'>Create Job</a>
+        <a ui-sref='findJobs'>Find Job</a>
+        <a ui-sref='profile'>My Profile</a>
+    </nav>
+    <div ui-view></div>
   </body>
 
 </html>
