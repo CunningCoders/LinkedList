@@ -35,8 +35,8 @@ var populate = function(){
 
  
 
-// db.initDB()
-populate()
+db.initDB()
+// populate()
 
 // db.getUserJobs(function(a){
 //   console.log(a)
