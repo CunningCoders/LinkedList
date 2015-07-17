@@ -14,57 +14,89 @@ var initDB = function() {
   createDatabase.on('end', function() { 
     console.log('Creating Database')
     client.end(); 
-    initTables()
+    initUserTable()
   });
 }
-  
-var initTables = function() {
-  var connectionString = process.env.DATABASE_URL || 'postgres://localhost:5432/linkedlist';
 
+//Queries server and calls callback once done
+var queryDB = function(queryStr, callback) {
+  callback = callback || function(){}
+  var connectionString = process.env.DATABASE_URL || 'postgres://localhost:5432/linkedlist';
   var client = new pg.Client(connectionString);
   client.connect();
-
-  var createUsersTable = client.query(
-    'CREATE TABLE users(id SERIAL PRIMARY KEY, username VARCHAR(20) NOT NULL UNIQUE, password VARCHAR(20) NOT NULL, Skills VARCHAR(100) NOT NULL,  GitHub_ID INTEGER UNIQUE, Description VARCHAR(255), CurrentJobs VARCHAR(255), PendingJobs VARCHAR(255), complete BOOLEAN)'
-  ); 
-  createUsersTable.on('end', function() {
-    var createJobsTable = client.query(
-    'CREATE TABLE jobs(id SERIAL PRIMARY KEY, title VARCHAR(20), ownerID int references users(id), description VARCHAR(255), skills VARCHAR(100), coworkers VARCHAR(100))'
-    );
-      console.log('Creating Tables')
-      client.end();
+  
+  var sendQuery = client.query(queryStr);
+  sendQuery.on('end', function(result) { 
+    callback(result)
+    client.end();
   });
 }
+
+//Queries server and calls callback on each returned row.
+var requestDB = function(queryStr, callback) {
+  var connectionString = process.env.DATABASE_URL || 'postgres://localhost:5432/linkedlist';
+  var client = new pg.Client(connectionString);
+  client.connect();
+    
+  var sendQuery = client.query(queryStr);
+  sendQuery.on('row', function(result){
+    callback(result)
+  })
+  sendQuery.on('end', function(result) { 
+    client.end();
+  });
+}
+
+  
+var initUserTable = function() {
+  queryDB(
+    'CREATE TABLE users(id SERIAL PRIMARY KEY, username VARCHAR(20) NOT NULL UNIQUE, password VARCHAR(20) NOT NULL, Skills VARCHAR(100) NOT NULL,  GitHub_ID INTEGER UNIQUE, Description VARCHAR(255), CurrentJobs VARCHAR(255), PendingJobs VARCHAR(255), complete BOOLEAN)',
+    initJobsTable
+  )
+} 
+
+var initJobsTable = function() {
+  queryDB(
+    'CREATE TABLE jobs(id SERIAL PRIMARY KEY, title VARCHAR(20), ownerID int references users(id), description VARCHAR(255), skills VARCHAR(100), coworkers VARCHAR(100))',
+    function(){console.log('Creating Tables')}
+  )
+} 
 
 var resetDB = function() {
-  var connectionString = process.env || 'postgres://localhost:5432/';
-
-  var client = new pg.Client(connectionString);
-  client.connect();
-
-  var createDatabase = client.query(
-    'DROP DATABASE linkedlist'
-    );
-  createDatabase.on('end', function() { 
-    console.log('Dropping Database')
-    client.end();
-    initDB(); 
-  });
+  queryDB(
+    'DROP DATABASE linkedlist',
+    function(){console.log('Dropping Database')}
+  )
 }
 
 var addUser = function(user) {
-  
-  var connectionString = process.env.DATABASE_URL || 'postgres://localhost:5432/linkedlist';
-  var client = new pg.Client(connectionString);
-  client.connect();
+  queryDB(
+    "INSERT INTO users (username, password, skills, GitHub_ID, Description, CurrentJobs, PendingJobs) VALUES ('"+user.username+"','"+user.password+"','"+user.skills+"',"+user.GitHub_ID+",'"+user.Description+"','"+user.CurrentJobs+"','"+user.PendingJobs+"')",
+    function(){console.log('Adding User')}
+  )
+}
 
-  var insertUser = client.query(
-    "INSERT INTO users (username, password, skills, GitHub_ID, Description, CurrentJobs, PendingJobs) VALUES ('"+user.username+"','"+user.password+"','"+user.skills+"',"+user.GitHub_ID+",'"+user.Description+"','"+user.CurrentJobs+"','"+user.PendingJobs+"')"
-  ); 
-  insertUser.on('end', function() { 
-    console.log('Adding User')
-    client.end();
-  });
+var addJob = function(job) {
+  queryDB(
+    "INSERT INTO jobs (title, ownerID, description, skills, coworkers) VALUES ('"+job.title+"',"+"(SELECT id from users WHERE username='"+job.owner+"')"+",'"+job.description+"','"+job.skills+"','"+job.coworkers+"')",
+    function(){console.log('Adding Job')}
+  )
+}
+
+var getJobs = function(filter, value){
+  if (filter === undefined) {
+    requestDB(
+      "SELECT * FROM jobs",
+      function(results){console.log(results)}
+    )
+  } else {
+    requestDB(
+      "SELECT * FROM jobs WHERE "+filter+" = '"+value+"'",
+      function(results){
+        console.log('callback')
+        console.log(results)}
+    )
+  }
 }
 
 var testUser = function() {
@@ -79,30 +111,16 @@ var testUser = function() {
   })
 }
 
-var addJob = function(job) {
-  var connectionString = process.env.DATABASE_URL || 'postgres://localhost:5432/linkedlist';
-  var client = new pg.Client(connectionString);
-  client.connect()
-
-  var insertJob = client.query(
-    "INSERT INTO jobs (title, ownerID, description, skills, coworkers) VALUES ('"+job.title+"',"+"(SELECT id from users WHERE username='"+job.owner+"')"+",'"+job.description+"','"+job.skills+"','"+job.coworkers+"')"
-  );
-  insertJob.on('end', function() { 
-    console.log('Adding Job')
-    client.end();
-  });
-}
-
 var testJob = function() {
   addJob({
-    title: 'Pro Dev',
+    title: 'Gosu Dev',
     owner: 'Not Colin',
-    description: 'Browse reddit, eat catered snacks, play Hearthstone',
-    skills: 'Frontend, Javascript, Mithril',
+    description: 'Take naps, dispense wisdom',
+    skills: 'Backend Analysis, C, Visual Basic',
     coworkers: 'Wes, Brittney, John, Zach'
   })
 }
 
-initDB();
+// resetDB();
 // testJob()
 // testUser();
