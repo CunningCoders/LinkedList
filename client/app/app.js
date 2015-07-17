@@ -28,7 +28,13 @@ angular.module('app', ['ui.router'])
     .state('homepage', {
       url: '/homepage', 
       templateUrl: 'app/homepage/homepage.html',
-      controller: 'homepageController'
+      controller: 'homepageController',
+      resolve: {
+        jobs: ['$http', function($http){
+          console.log('Trying to GET')
+          return $http({method: 'GET', url: '/jobs'});
+        }]
+      }
     })
 }])
 //authentication checking here? Like in shortly-angular.
