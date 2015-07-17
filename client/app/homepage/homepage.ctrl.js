@@ -23,6 +23,4 @@ angular.module('app')
     skills: 'Angular, UI-Router, Backbone',
     coworkers: 'Colin, Brittney, John, Zach' }
   ];
-
-
 })

@@ -1,13 +1,17 @@
 <div id='currentProjects'>
   <h4>Current Projects</h4>
   <ul>
-    <li ng-repeat='job in currentProjects'>{{ job.title }}</li>
+    <li ng-repeat='job in currentProjects'>{{ job.title }}
+      <button ui-sref="^.jobDetails">details</button>
+    </li>
   </ul>
 </div>
 <div id='pendingProjects'>
   <h4>Pending Projects</h4>
   <ul>
-    <li ng-repeat='job in pendingProjects'>{{ job.title }}</li>
+    <li ng-repeat='job in pendingProjects'>{{ job.title }}
+      <button ui-sref="^.jobDetails">details</button>
+    </li>
   </ul>
 </div>
 
