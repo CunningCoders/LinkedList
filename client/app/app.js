@@ -13,7 +13,13 @@ angular.module('app', ['ui.router'])
     .state('findJobs', {
       url: '/findJobs',
       templateUrl: 'app/findJobs/findJobs.html',
-      controller: 'findJobsController'
+      controller: 'findJobsController',
+      resolve: {
+        jobs: ['$http', function($http){
+          console.log('Trying to GET, findJobs')
+          return $http({method: 'GET', url: '/jobs'});
+        }]
+      }
     })
     .state('jobDetails', {
       url: '/jobDetails',
@@ -31,7 +37,7 @@ angular.module('app', ['ui.router'])
       controller: 'homepageController',
       resolve: {
         jobs: ['$http', function($http){
-          console.log('Trying to GET')
+          console.log('Trying to GET, homepage')
           return $http({method: 'GET', url: '/jobs'});
         }]
       }

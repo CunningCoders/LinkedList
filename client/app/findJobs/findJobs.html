@@ -1,6 +1,11 @@
 <div id='container'>
   <label>Search by skill:</label>
-  <input name='skillSearch'>
-  <label>Search by project name:</label>
-  <input name='nameSearch'>
+  <input type='text' name='skillSearch' placeholder='ex: Node' ng-model='search'>
+<!--   <label>Search by project name:</label>
+  <input type='text' name='nameSearch' placeholder='ex: Awesome' ng-model='search'>
+ -->  <ul>
+    <li ng-repeat='job in projects'><strong>{{ job.title }}-- </strong> {{ job.description.substring(0,50) }}
+      <button ui-sref="^.jobDetails">details</button>
+    </li>
+  </ul>
 </div>
