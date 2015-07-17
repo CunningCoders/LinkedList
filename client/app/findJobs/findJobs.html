@@ -1,11 +1,11 @@
 <div id='container'>
   <label>Search by skill:</label>
-  <input type='text' name='skillSearch' placeholder='ex: Node' ng-model='search'>
+  <input type='text' name='skillSearch' placeholder='ex: Node' ng-model='skillSearch'>
   <br/>
   <label>Search by project name:</label>
   <input type='text' name='nameSearch' placeholder='ex: Awesome' ng-model='nameSearch'>
   <ul>
-    <li ng-repeat='job in projects | filter:search | filter:nameSearch'>
+    <li ng-repeat='job in projects | filter:{title: nameSearch, skills: skillSearch} | filter:nameSearch'>
       <strong>{{ job.title }}-- </strong> 
       {{ (job.description.length)>50 ? job.description.substring(0,50)+'...' : job.description }}
       <button ui-sref="^.jobDetails">details</button>
