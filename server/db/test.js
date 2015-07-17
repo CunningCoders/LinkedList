@@ -11,42 +11,36 @@ var populate = function(){
     Description: "Alovernotafighter",
     CurrentJobs: "MakerSquareGreenfield",
     PendingJobs: "Gettingajob"
-  })
-
-  db.addUser({
-    username: 'Colin',
-    password: 'abcd',
-    skills: 'Javascript, NodeJS, Hearthstone',
-    GitHub_ID: 10624140,
-    Description: "Something something pants",
-    CurrentJobs: "Not Currently working",
-    PendingJobs: "S"
-  })
-
-  db.addJob({
-    title: 'Gosu Dev',
-    owner: 'Not Colin',
-    description: 'Take naps, dispense wisdom',
-    skills: 'Backend Analysis, C, Visual Basic',
-    coworkers: 'Wes, Brittney, John, Zach'
-  })
-
-  db.addUserJob('Colin', 'Gosu Dev', 'Pending')
+  },  function(){db.addUser({
+      username: 'Colin',
+      password: 'abcd',
+      skills: 'Javascript, NodeJS, Hearthstone',
+      GitHub_ID: 10624140,
+      Description: "Something something pants",
+      CurrentJobs: "Not Currently working",
+      PendingJobs: "S"}
+  , 
+  function(){db.addJob({
+      title: 'Gosu Dev',
+      owner: 'Not Colin',
+      description: 'Take naps, dispense wisdom',
+      skills: 'Backend Analysis, C, Visual Basic',
+      coworkers: 'Wes, Brittney, John, Zach'}
+  ,  function(){db.addUserJob('Colin', 'Gosu Dev', 'Pending')}
+  )})})
 }
 
-// db.initDB()
-// populate()
+ 
 
-db.getUserJobs(function(a){
-  console.log(a)
-},'Colin')
+
+ 
+
+// db.initDB()
+populate()
+
+// db.getUserJobs(function(a){
+//   console.log(a)
+// },'Colin')
 
 
 // db.getJobs(function(a){console.log(a)});
-
-//  title:
-//  description:
-//  owner:
-//  skills:
-//  coworkers: 
-//  status:

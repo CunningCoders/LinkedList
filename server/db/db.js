@@ -99,27 +99,34 @@ db.resetDB = function() {
   )
 }
 
-db.addUser = function(user) {
+db.addUser = function(user, callback) {
   queryDB(
     "INSERT INTO users (username, password, skills, GitHub_ID, Description) \
     VALUES ('"+user.username+"','"+user.password+"','"+user.skills+"',"+user.GitHub_ID+",'"+user.Description+"')",
-    function(){console.log('Adding User')}
+    function(){
+      console.log('Adding User')
+      callback()
+    }
   )
 }
 
-db.addJob = function(job) {
+db.addJob = function(job, callback) {
   queryDB(
     "INSERT INTO jobs (title, ownerID, description, skills, coworkers) VALUES \
     ('"+job.title+"',"+"(SELECT id FROM users WHERE username='"+job.owner+"')"+",'"+job.description+"',\
     '"+job.skills+"','"+job.coworkers+"')",
-    function(){console.log('Adding Job')}
+    function(){
+      console.log('Adding Job')
+      callback()
+    }
   )
 }
 
 db.addUserJob = function(username, jobTitle, status) {
-queryDB(
+  queryDB(
     "INSERT INTO userjobs (userID, jobID, status) VALUES \
-    ((SELECT id FROM users WHERE username='"+username+"'), (SELECT id FROM jobs WHERE title='"+jobTitle+"'), '"+status+"')"
+    ((SELECT id FROM users WHERE username='"+username+"'), \
+     (SELECT id FROM jobs WHERE title='"+jobTitle+"'), '"+status+"')"
   )
 }
 
