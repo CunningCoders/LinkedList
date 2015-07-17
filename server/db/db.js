@@ -159,12 +159,17 @@ db.getUsers = function(callback, filter, value){
   }
 }
 
-// db.getUserJobs = function(callback, username) {
-//   requestDB(
-//     "SELECT (jobs.title, jobs.description, jobs.ownerID, jobs.skills, jobs.coworkers, userjobs.status) FROM jobs INNER JOIN userjobs ON jobs.id=userjobs.jobID")
-
-//   SELECT id from users WHERE username='"+user.username+"',
-// }
+db.getUserJobs = function(callback, username) {
+  requestDB(
+    "SELECT userjobs.userID, jobs.title, jobs.description, jobs.ownerID, jobs.skills, jobs.coworkers, userjobs.status \
+    FROM jobs INNER JOIN userjobs ON jobs.id=userjobs.jobID\
+    WHERE userjobs.userID = (SELECT id FROM users WHERE username='"+username+"')" 
+    ,
+    function(results){
+      return callback(results)
+    }
+  )
+}
 
 db.addTestUser = function() {
   db.addUser({
