@@ -1,3 +1,49 @@
 <div id='container'>
-  {{message}}
+  <div class='row'>
+    <div class="col-sm-8 col-sm-offset-2">
+      <div class="page-header text-center">
+        <h2>Create a Job</h2>
+      </div>
+      <form id="signup-form" ng-submit="processForm()">
+        <div class="form-group">
+          <label for="jobName">Name of Job</label>
+          <input type="text" class="form-control" name="jobName" ng-model="formData.jobName">
+        </div>
+
+        <div class="form-group">
+          <label for="description">Description</label>
+          <input type="text" class="form-control" name="description" ng-model="formData.description">
+        </div>
+
+
+        <label>Skills</label>
+        <div class="form-group">
+            <div class="radio">
+                <label>
+                   <input type="radio" ng-model="formData.skills" ng-value="Angular" ng-click="uncheck($event)">
+                   I need Angular
+                </label>
+            </div>
+            <div class="radio">
+                <label>
+                    <input type="radio" ng-model="formData.skills" ng-value="Node.js" ng-click="uncheck($event)">
+                    I need Node.js
+                </label>
+            </div>
+        </div>
+
+        <div class="form-group">
+          <label for="salary">Salary</label>
+          <input type="text" class="form-control" name="salary" ng-model="formData.salary">
+        </div>
+
+        <div class="text-center">
+            <button type="submit" class="btn btn-danger">Create Job</button>
+        </div>
+
+
+      </form>
+
+    </div>
+  </div>
 </div>
