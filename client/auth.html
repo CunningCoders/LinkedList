@@ -1,1 +1,21 @@
-auth.html
+
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Linked List</title>
+    <script src="bower_components/angular/angular.min.js"></script>
+    <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+    <script src="auth/auth.js"></script>
+    <script src="auth/signUp/signup.ctrl.js"></script>
+    <script src="auth/signIn/signin.ctrl.js"></script>
+  </head>
+  <body ng-app='auth' ng-controller="authController">
+  	<div ui-view></div>
+    <a ui-sref="signup" ng-hide="currentPath === '/signup'">Don't have an account? <strong>Signup</strong></a>
+    <a ui-sref="signin" ng-hide="currentPath === '/signin'">Already have an account? <strong>Signin</strong></a>
+
+  </body>
+
+</html>
+
