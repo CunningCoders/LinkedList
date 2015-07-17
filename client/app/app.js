@@ -27,7 +27,8 @@ angular.module('app', ['ui.router'])
     })
     .state('homepage', {
       url: '/homepage', 
-      templateUrl: 'app/homepage/homepage.html'
+      templateUrl: 'app/homepage/homepage.html',
+      controller: 'homepageController'
     })
 }])
 //authentication checking here? Like in shortly-angular.
