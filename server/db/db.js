@@ -1,8 +1,8 @@
 // CREATE DATABASE LinkedList;
-
+module.exports = db = {};
 var pg = require('pg');
 
-var initDB = function() {
+db.initDB = function() {
   var connectionString = process.env || 'postgres://localhost:5432/';
 
   var client = new pg.Client(connectionString);
@@ -51,69 +51,76 @@ var requestDB = function(queryStr, callback) {
 var initUserTable = function() {
   queryDB(
     'CREATE TABLE users(id SERIAL PRIMARY KEY, username VARCHAR(20) NOT NULL UNIQUE, password VARCHAR(20) NOT NULL, Skills VARCHAR(100) NOT NULL,  GitHub_ID INTEGER UNIQUE, Description VARCHAR(255), CurrentJobs VARCHAR(255), PendingJobs VARCHAR(255), complete BOOLEAN)',
-    initJobsTable
+    db.initJobsTable
   )
 } 
 
-var initJobsTable = function() {
+db.initJobsTable = function() {
   queryDB(
     'CREATE TABLE jobs(id SERIAL PRIMARY KEY, title VARCHAR(20), ownerID int references users(id), description VARCHAR(255), skills VARCHAR(100), coworkers VARCHAR(100))',
     function(){console.log('Creating Tables')}
   )
 } 
 
-var resetDB = function() {
+db.resetDB = function() {
   queryDB(
     'DROP DATABASE linkedlist',
     function(){console.log('Dropping Database')}
   )
 }
 
-var addUser = function(user) {
+db.addUser = function(user) {
   queryDB(
     "INSERT INTO users (username, password, skills, GitHub_ID, Description, CurrentJobs, PendingJobs) VALUES ('"+user.username+"','"+user.password+"','"+user.skills+"',"+user.GitHub_ID+",'"+user.Description+"','"+user.CurrentJobs+"','"+user.PendingJobs+"')",
     function(){console.log('Adding User')}
   )
 }
 
-var addJob = function(job) {
+db.addJob = function(job) {
   queryDB(
     "INSERT INTO jobs (title, ownerID, description, skills, coworkers) VALUES ('"+job.title+"',"+"(SELECT id from users WHERE username='"+job.owner+"')"+",'"+job.description+"','"+job.skills+"','"+job.coworkers+"')",
     function(){console.log('Adding Job')}
   )
 }
 
-var getJobs = function(filter, value){
+db.getJobs = function(callback, filter, value){
   if (filter === undefined) {
     requestDB(
       "SELECT * FROM jobs",
-      function(results){return results}
+      function(results){ 
+        return callback(results)
+      }
     )
   } else {
     requestDB(
       "SELECT * FROM jobs WHERE "+filter+" = '"+value+"'",
-      function(results){return results}
+      function(results){ 
+        return callback(results)
+      }
     )
   }
 }
 
-var getUsers = function(filter, value){
+db.getUsers = function(callback, filter, value){
   if (filter === undefined) {
     requestDB(
       "SELECT * FROM users",
-      function(results){console.log(results)}
+      function(results){ 
+        return callback(results)
+      }
     )
   } else {
     requestDB(
       "SELECT * FROM users WHERE "+filter+" = '"+value+"'",
-      function(results){
-        console.log(results)}
+      function(results){ 
+        return callback(results)
+      }
     )
   }
 }
 
 var testUser = function() {
-  addUser({
+  db.addUser({
     username: 'Not Colin',
     password: 'abc',
     skills: 'Javascript, NodeJS, Hearthstone',
@@ -125,7 +132,7 @@ var testUser = function() {
 }
 
 var testJob = function() {
-  addJob({
+  db.addJob({
     title: 'Gosu Dev',
     owner: 'Not Colin',
     description: 'Take naps, dispense wisdom',
@@ -133,5 +140,3 @@ var testJob = function() {
     coworkers: 'Wes, Brittney, John, Zach'
   })
 }
-
-initDB();
