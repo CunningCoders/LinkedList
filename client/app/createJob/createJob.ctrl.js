@@ -1,6 +1,6 @@
 angular.module('app')
 
-.controller('createJobController', function($scope, creatJobFactory) {
+.controller('createJobController', ['$scope', function($scope) {
 	$scope.formData = {};
 	$scope.uncheck = function (event) {
 	    if ($scope.checked == event.target.value)
@@ -9,4 +9,4 @@ angular.module('app')
 	$scope.processForm = function(){
 		console.log(yay)
 	}
-})
+}])

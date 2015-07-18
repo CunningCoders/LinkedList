@@ -24,7 +24,7 @@ angular.module('app', ['ui.router'])
     .state('jobDetails', {
       url: '/jobDetails',
       templateUrl: 'app/jobDetails/jobDetails.html',
-      controller: 'jobDetailsController' 
+      controller: 'jobDetailsController'
     })
     .state('profile', {
       url: '/profile',
@@ -32,7 +32,7 @@ angular.module('app', ['ui.router'])
       controller: 'profileController'
     })
     .state('homepage', {
-      url: '/homepage', 
+      url: '/homepage',
       templateUrl: 'app/homepage/homepage.html',
       controller: 'homepageController',
       resolve: {
