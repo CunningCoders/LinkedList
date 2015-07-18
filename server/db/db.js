@@ -69,7 +69,7 @@ db.initJobsTable = function() {
   queryDB(
     'CREATE TABLE jobs(\
       id SERIAL PRIMARY KEY, \
-      title VARCHAR(20), \
+      title VARCHAR(20) NOT NULL UNIQUE, \
       ownerID INTEGER references users(id), \
       description VARCHAR(255), \
       skills VARCHAR(100), \
@@ -80,7 +80,7 @@ db.initJobsTable = function() {
     }
   )
 }
-
+  
 db.initUserJobsTable = function() {
   queryDB(
     'CREATE TABLE userjobs(\
@@ -130,6 +130,29 @@ db.addUserJob = function(username, jobTitle, status) {
   )
 }
 
+db.updateJob = function(job) {
+  queryDB(
+    "UPDATE jobs SET title='"+job.title+"', \
+     ownerID =(SELECT id FROM users WHERE username='"+job.owner+"'), \
+     description, skills, coworkers WHERE", 
+    function(){console.log('Update Complete')})
+}
+
+db.updateUser = function(user) {
+  queryDB(
+    "UPDATE users SET password='"+user.password+"', \
+    skills='"+user.skills+"', GitHub_ID="+user.GitHub_ID+", Description ="+user.Description+"' \ 
+    WHERE username='"+user.username+"'')", 
+    function(){console.log('Update Complete')})
+}
+
+db.updateUserJob = function(userjob) {
+  // queryDB(
+  //   "UPDATE userjobs SET WHERE", 
+  //   function(){console.log('Update Complete')
+  // })
+}
+
 db.getJobs = function(callback, filter, value){
   if (filter === undefined) {
     requestDB(
@@ -169,7 +192,20 @@ db.getUsers = function(callback, filter, value){
 db.getUserJobs = function(callback, username) {
   requestDB(
     "SELECT userjobs.userID, jobs.title, jobs.description, jobs.ownerID, jobs.skills, jobs.coworkers, userjobs.status \
-    FROM jobs INNER JOIN userjobs ON jobs.id=userjobs.jobID\
+    FROM jobs INNER JOIN userjobs ON jobs.id=userjobs.jobID \
+    WHERE userjobs.userID = (SELECT id FROM users WHERE username='"+username+"')" 
+    ,
+    function(results){
+      return callback(results)
+    }
+  )
+}
+
+db.getCoworkers = function(callback, jobTitle) {
+  requestDB(
+    "SELECT userjobs.jobID, user.username, jobs.title, userjobs.status \
+    FROM jobs INNER JOIN userjobs ON jobs.id=userjobs.userID \
+    INNER JOIN users ON user.id=userjobs.userID \
     WHERE userjobs.userID = (SELECT id FROM users WHERE username='"+username+"')" 
     ,
     function(results){

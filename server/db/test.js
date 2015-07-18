@@ -30,13 +30,20 @@ var populate = function(){
   )})})
 }
 
- 
-
-
- 
-
-db.initDB()
+// db.initDB()
 // populate()
+
+db.updateUser({
+  username: 'Colin',
+  password: 'abcd',
+  skills: 'Javascript, NodeJS, Hearthstone, Smashbros',
+  GitHub_ID: 10624140,
+  Description: "Something something pants",
+  CurrentJobs: "Not Currently working",
+  PendingJobs: "S"
+})
+
+
 
 // db.getUserJobs(function(a){
 //   console.log(a)
