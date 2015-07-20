@@ -9,42 +9,55 @@ var populate = function(){
     skills: 'Javascript, NodeJS, Hearthstone',
     GitHub_ID: 10624139,
     Description: "Alovernotafighter",
-    CurrentJobs: "MakerSquareGreenfield",
-    PendingJobs: "Gettingajob"
   },  function(){db.addUser({
       username: 'Colin',
       password: 'abcd',
       skills: 'Javascript, NodeJS, Hearthstone',
       GitHub_ID: 10624140,
       Description: "Something something pants",
-      CurrentJobs: "Not Currently working",
-      PendingJobs: "S"}
+      }
   , 
   function(){db.addJob({
       title: 'Gosu Dev',
       owner: 'Not Colin',
       description: 'Take naps, dispense wisdom',
       skills: 'Backend Analysis, C, Visual Basic',
-      coworkers: 'Wes, Brittney, John, Zach'}
-  ,  function(){db.addUserJob('Colin', 'Gosu Dev', 'Pending')}
+    },
+    function(){db.addUserJob('Colin', 'Gosu Dev', 'Pending')}
   )})})
 }
 
 // db.initDB()
 // populate()
+var testUpUser = function() {
+  db.updateUser({
+    id : 2,
+    username: 'ColinW',
+    skills: 'Javascript, NodeJS, Hearthstone, Naps',
+    GitHub_ID: 10624140,
+    Description: "Not a real doctor, just a love doctor",
+  })
+}
 
-db.updateUser({
-  username: 'Colin',
-  password: 'abcd',
-  skills: 'Javascript, NodeJS, Hearthstone, Smashbros',
-  GitHub_ID: 10624140,
-  Description: "Something something pants",
-  CurrentJobs: "Not Currently working",
-  PendingJobs: "S"
-})
+var testUpJob = function() {
+  db.updateJob({
+      id: 1,
+      title: 'Mega Gosu Dev',
+      description: 'Take naps, dispense wisdom, invent The Facebook',
+      skills: 'Backend Analysis, C, Visual Basic, Fly helicopters',
+  })
+}
 
+var testUpUserjobs = function(){
+  db.updateUserJob({
+    id: 1,
+    username: 'Not Colin',
+    status: 'Current'
 
+  })
+}
 
+testUpUserjobs()
 // db.getUserJobs(function(a){
 //   console.log(a)
 // },'Colin')

@@ -112,9 +112,9 @@ db.addUser = function(user, callback) {
 
 db.addJob = function(job, callback) {
   queryDB(
-    "INSERT INTO jobs (title, ownerID, description, skills, coworkers) VALUES \
+    "INSERT INTO jobs (title, ownerID, description, skills) VALUES \
     ('"+job.title+"',"+"(SELECT id FROM users WHERE username='"+job.owner+"')"+",'"+job.description+"',\
-    '"+job.skills+"','"+job.coworkers+"')",
+    '"+job.skills+"')",
     function(){
       console.log('Adding Job')
       callback()
@@ -132,25 +132,22 @@ db.addUserJob = function(username, jobTitle, status) {
 
 db.updateJob = function(job) {
   queryDB(
-    "UPDATE jobs SET title='"+job.title+"', \
-     ownerID =(SELECT id FROM users WHERE username='"+job.owner+"'), \
-     description, skills, coworkers WHERE", 
+    "UPDATE jobs SET title='"+job.title+"'\
+    , description='"+job.description+"', skills='"+job.skills+"' WHERE jobs.id="+job.id, 
     function(){console.log('Update Complete')})
 }
-
 db.updateUser = function(user) {
   queryDB(
-    "UPDATE users SET password='"+user.password+"', \
-    skills='"+user.skills+"', GitHub_ID="+user.GitHub_ID+", Description ="+user.Description+"' \ 
-    WHERE username='"+user.username+"'')", 
-    function(){console.log('Update Complete')})
+    "UPDATE users SET username='"+user.username+"', skills='"+user.skills+"', GitHub_ID="+user.GitHub_ID+", \
+     Description='"+user.Description+"' WHERE users.id="+user.id, 
+    function(){console.log("Update Complete")})
 }
-
 db.updateUserJob = function(userjob) {
-  // queryDB(
-  //   "UPDATE userjobs SET WHERE", 
-  //   function(){console.log('Update Complete')
-  // })
+  queryDB(
+    "UPDATE userjobs SET userID=(SELECT id FROM users WHERE username='"+userjob.username+"'),\
+     jobID=(SELECT id FROM jobs WHERE title='"+userjob.jobTitle+"'), status='"+userjob.status+"' \
+      WHERE userjobs.id='"+userjob.id+"'", 
+    function(){console.log("Update Complete")})
 }
 
 db.getJobs = function(callback, filter, value){
