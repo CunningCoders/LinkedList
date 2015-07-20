@@ -1,4 +1,26 @@
 <div id='container'>
-  <br>
-  {{test}}
+  <div class="field">
+    <strong>First Name:</strong>
+    <div click-to-edit="editObject.firstName"></div>
+  </div>
+  <div class="field">
+    <strong>Last Name:</strong>
+    <div click-to-edit="editObject.lastName"></div>
+  </div>
+  <div class="field">
+    <strong>Phone:</strong>
+    <div click-to-edit="editObject.phone"></div>
+  </div>
+
+  <!--shows the values of edited form-->
+  <div class="panel callout">
+    <h2>Values</h2>
+
+    <p>
+      <strong>First Name:</strong> {{editObject.firstName}}</p>
+    <p>
+      <strong>Last Name:</strong> {{editObject.lastName}}</p>
+    <p>
+      <strong>Phone:</strong> {{editObject.phone}}</p>
+  </div>
 </div>

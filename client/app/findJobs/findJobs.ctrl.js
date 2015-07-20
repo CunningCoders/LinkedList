@@ -1,5 +1,9 @@
 angular.module('app')
 
-.controller('findJobsController', function($scope) {
-	$scope.test = "hey kid! i'm a computer (Find Jobs View)"
-})
+.controller('findJobsController', ['$scope','jobs', '$rootScope', function($scope, jobs, $rootScope) {
+  $scope.projects = jobs.data;
+
+  $scope.setSelected = function(project) {
+    $rootScope.selectedProject = project;
+  }
+}])

@@ -1,6 +1,8 @@
 angular.module('app')
 
-.controller('jobDetailsController', function($scope) {
-	$scope.test = "This is the job Details page."
+.controller('jobDetailsController', ['$scope', 'job', function($scope, job) {
+	$scope.project = job;
+  $scope.skills = job.skills;
+  $scope.coworkers = job.coworkers;
 
-})
+}])
