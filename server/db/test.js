@@ -1,30 +1,45 @@
 var db = require('./db.js')
-
+var _ = require('underscore')
 
 
 var populate = function(){
   db.addUser({
-    username: 'Not Colin',
+    username: 'Colin',
     password: 'abc',
-    skills: 'Javascript, NodeJS, Hearthstone',
+    skills: 'Javascript, NodeJS, SQL',
     gitHub_ID: 10624139,
-    description: "Alovernotafighter",
+    description: "Expert napper",
   },  function(){db.addUser({
-      username: 'Colin',
-      password: 'abcd',
-      skills: 'Javascript, NodeJS, Hearthstone',
+      username: 'Zach',
+      password: 'defg',
+      skills: 'Javascript, NodeJS, Hearthstone, Angular',
       gitHub_ID: 10624140,
-      description: "Something something pants",
-      }
-  , 
+      description: "Plays some sweet violin.",
+      },
+      function(){db.addUser({
+      username: 'John',
+      password: '1234',
+      skills: 'Javascript, NodeJS, Express',
+      gitHub_ID: 10624141,
+      description: "Something something something",
+      }, 
   function(){db.addJob({
       title: 'Gosu Dev',
-      owner: 'Not Colin',
+      owner: 'Colin',
       description: 'Take naps, dispense wisdom',
       skills: 'Backend Analysis, C, Visual Basic',
     },
-    function(){db.addUserJob('Colin', 'Gosu Dev', 'Pending')}
-  )})})
+  function(){db.addJob({
+      title: 'Junior Dev',
+      owner: 'Zach',
+      description: 'Screw up merges, Drop databases',
+      skills: 'Javascript',
+    },
+    function(){
+      db.addUserJob('Zach', 'Gosu Dev', 'Pending')
+      db.addUserJob('John', 'Gosu Dev', 'Current')
+      db.addUserJob('Colin', 'Junior Dev', 'Pending')
+  })})})})})
 }
 
 var testUpUser = function() {
@@ -55,9 +70,29 @@ var testUpUserjobs = function(){
   })
 }
 
+var getJobs = function(){
+  db.getJobs(function(jobs){
+    _.each(jobs, function(job){
+      job.coworkers = [];
+      db.getCoworkers(function(cw){
+        job.coworkers = cw; 
+      }, job.title)
+    })
+    setTimeout(function(){
+      console.log(jobs[0].coworkers[1])}, 5000)
+  })
+}
 
-db.initDB()
+// db.initDB()
 // populate()
+
+getJobs()
+
+// db.getCoworkers(
+//   function(a){
+//     console.log(a)
+//   }, 'Mega Dev'
+// )
 // testUpUser()
 // testUpUserjobs()
 // db.getUserJobs(function(a){
