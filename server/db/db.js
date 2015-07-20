@@ -199,10 +199,10 @@ db.getUserJobs = function(callback, username) {
 
 db.getCoworkers = function(callback, jobTitle) {
   requestDB(
-    "SELECT userjobs.jobID, user.username, jobs.title, userjobs.status \
-    FROM jobs INNER JOIN userjobs ON jobs.id=userjobs.userID \
-    INNER JOIN users ON user.id=userjobs.userID \
-    WHERE userjobs.userID = (SELECT id FROM users WHERE username='"+username+"')" 
+    "SELECT userjobs.jobID, userjobs.userID, userjobs.status, users.username, jobs.title \
+    FROM jobs INNER JOIN userjobs ON jobs.id=userjobs.jobID \
+    INNER JOIN users ON users.id=userjobs.userID \
+    WHERE jobs.title='"+jobTitle+"'" 
     ,
     function(results){
       return callback(results)
