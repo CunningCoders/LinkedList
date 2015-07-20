@@ -7,14 +7,14 @@ var populate = function(){
     username: 'Not Colin',
     password: 'abc',
     skills: 'Javascript, NodeJS, Hearthstone',
-    GitHub_ID: 10624139,
-    Description: "Alovernotafighter",
+    gitHub_ID: 10624139,
+    description: "Alovernotafighter",
   },  function(){db.addUser({
       username: 'Colin',
       password: 'abcd',
       skills: 'Javascript, NodeJS, Hearthstone',
-      GitHub_ID: 10624140,
-      Description: "Something something pants",
+      gitHub_ID: 10624140,
+      description: "Something something pants",
       }
   , 
   function(){db.addJob({
@@ -27,15 +27,13 @@ var populate = function(){
   )})})
 }
 
-// db.initDB()
-// populate()
 var testUpUser = function() {
   db.updateUser({
     id : 2,
     username: 'ColinW',
     skills: 'Javascript, NodeJS, Hearthstone, Naps',
-    GitHub_ID: 10624140,
-    Description: "Not a real doctor, just a love doctor",
+    gitHub_ID: 10624140,
+    description: "Not a real doctor, just a love doctor",
   })
 }
 
@@ -57,7 +55,11 @@ var testUpUserjobs = function(){
   })
 }
 
-testUpUserjobs()
+
+db.initDB()
+// populate()
+// testUpUser()
+// testUpUserjobs()
 // db.getUserJobs(function(a){
 //   console.log(a)
 // },'Colin')

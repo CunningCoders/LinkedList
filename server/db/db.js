@@ -55,9 +55,9 @@ var initUserTable = function() {
       id SERIAL PRIMARY KEY, \
       username VARCHAR(20) NOT NULL UNIQUE, \
       password VARCHAR(20) NOT NULL, \
-      Skills VARCHAR(100) NOT NULL,  \
-      GitHub_ID INTEGER UNIQUE, \
-      Description VARCHAR(255))',
+      skills VARCHAR(100) NOT NULL,  \
+      gitHub_ID INTEGER UNIQUE, \
+      description VARCHAR(255))',
     function(){
       console.log('Creating User Table')
       db.initJobsTable()
@@ -72,8 +72,7 @@ db.initJobsTable = function() {
       title VARCHAR(20) NOT NULL UNIQUE, \
       ownerID INTEGER references users(id), \
       description VARCHAR(255), \
-      skills VARCHAR(100), \
-      coworkers VARCHAR(100))',
+      skills VARCHAR(100))',
     function(){
       console.log('Creating Jobs Table')
       db.initUserJobsTable()  
@@ -101,8 +100,8 @@ db.resetDB = function() {
 
 db.addUser = function(user, callback) {
   queryDB(
-    "INSERT INTO users (username, password, skills, GitHub_ID, Description) \
-    VALUES ('"+user.username+"','"+user.password+"','"+user.skills+"',"+user.GitHub_ID+",'"+user.Description+"')",
+    "INSERT INTO users (username, password, skills, GitHub_ID, description) \
+    VALUES ('"+user.username+"','"+user.password+"','"+user.skills+"',"+user.gitHub_ID+",'"+user.description+"')",
     function(){
       console.log('Adding User')
       callback()
@@ -138,8 +137,8 @@ db.updateJob = function(job) {
 }
 db.updateUser = function(user) {
   queryDB(
-    "UPDATE users SET username='"+user.username+"', skills='"+user.skills+"', GitHub_ID="+user.GitHub_ID+", \
-     Description='"+user.Description+"' WHERE users.id="+user.id, 
+    "UPDATE users SET username='"+user.username+"', skills='"+user.skills+"', GitHub_ID="+user.gitHub_ID+", \
+     Description='"+user.description+"' WHERE users.id="+user.id, 
     function(){console.log("Update Complete")})
 }
 db.updateUserJob = function(userjob) {
@@ -188,7 +187,7 @@ db.getUsers = function(callback, filter, value){
 
 db.getUserJobs = function(callback, username) {
   requestDB(
-    "SELECT userjobs.userID, jobs.title, jobs.description, jobs.ownerID, jobs.skills, jobs.coworkers, userjobs.status \
+    "SELECT userjobs.userID, jobs.title, jobs.description, jobs.ownerID, jobs.skills, userjobs.status \
     FROM jobs INNER JOIN userjobs ON jobs.id=userjobs.jobID \
     WHERE userjobs.userID = (SELECT id FROM users WHERE username='"+username+"')" 
     ,
@@ -211,22 +210,3 @@ db.getCoworkers = function(callback, jobTitle) {
   )
 }
 
-db.addTestUser = function() {
-  db.addUser({
-    username: 'Not Colin',
-    password: 'abc',
-    skills: 'Javascript, NodeJS, Hearthstone',
-    GitHub_ID: 10624139,
-    Description: "Alovernotafighter",
-  })
-}
-
-db.addTestJob = function() {
-  db.addJob({
-    title: 'Gosu Dev',
-    owner: 'Not Colin',
-    description: 'Take naps, dispense wisdom',
-    skills: 'Backend Analysis, C, Visual Basic',
-    coworkers: 'Wes, Brittney, John, Zach'
-  })
-}
