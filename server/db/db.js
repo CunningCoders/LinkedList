@@ -137,8 +137,8 @@ db.updateJob = function(job) {
 }
 db.updateUser = function(user) {
   queryDB(
-    "UPDATE users SET username='"+user.username+"', skills='"+user.skills+"', GitHub_ID="+user.gitHub_ID+", \
-     Description='"+user.description+"' WHERE users.id="+user.id, 
+    "UPDATE users SET skills='"+user.skills+"', gitHub_ID="+user.gitHub_ID+", \
+     description='"+user.description+"' WHERE users.id="+user.id, 
     function(){console.log("Update Complete")})
 }
 db.updateUserJob = function(userjob) {
