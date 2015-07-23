@@ -70,23 +70,10 @@ var testUpUserjobs = function(){
   })
 }
 
-var getJobs = function(){
-  db.getJobs(function(jobs){
-    _.each(jobs, function(job){
-      job.coworkers = [];
-      db.getCoworkers(function(cw){
-        job.coworkers = cw; 
-      }, job.title)
-    })
-    setTimeout(function(){
-      console.log(jobs[0].coworkers[1])}, 5000)
-  })
-}
-
-// db.initDB()
+db.initDB()
 // populate()
 
-getJobs()
+
 
 // db.getCoworkers(
 //   function(a){
