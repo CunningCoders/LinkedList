@@ -3,6 +3,6 @@
   <form name="signinForm" ng-submit='signin()'>
     <input type='text'ng-model='user.username' placeholder="username"/>
     <input type="password" ng-model='user.password' placeholder="password"/>
-    <button>signin</button>
+    <button ng-click="auth.signin()">signin</button>
   </form>
 </div>

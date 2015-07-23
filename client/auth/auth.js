@@ -25,9 +25,9 @@ var auth = angular.module('auth', ['ui.router'])
 
 		})
 
-    //$scope.changeState = function () {
-    //$state.go('where.ever.you.want.to.go');
-//};
+// .controller('loginController', ['$scope', '$location'], function($scope, $location){
+
+// })
 
 }]);
 
