@@ -1,6 +1,7 @@
 // CREATE DATABASE LinkedList;
 module.exports = db = {};
 var pg = require('pg');
+var _ = require('underscore')
 
 db.initDB = function() {
   var connectionString = process.env || 'postgres://localhost:5432/';
@@ -35,7 +36,7 @@ var queryDB = function(queryStr, callback) {
   });
 }
 
-//Queries server and calls callback on each returned row.
+//Queries server and calls callback on results
 var requestDB = function(queryStr, callback) {
   var connectionString = process.env.DATABASE_URL || 'postgres://localhost:5432/linkedlist';
   var client = new pg.Client(connectionString);
@@ -158,6 +159,7 @@ db.getJobs = function(callback, filter, value){
       }
     )
   } else {
+    console.log('filter : '+filter+' value : '+value)
     requestDB(
       "SELECT * FROM jobs WHERE "+filter+" = '"+value+"'",
       function(results){ 
@@ -197,16 +199,46 @@ db.getUserJobs = function(callback, username) {
   )
 }
 
-db.getCoworkers = function(callback, jobTitle) {
+db.getCoworkers = function(callback, jobID) {
   requestDB(
-    "SELECT userjobs.jobID, userjobs.userID, userjobs.status, users.username, jobs.title \
+    "SELECT users.username, userjobs.status, userjobs.jobID, userjobs.userID \
     FROM jobs INNER JOIN userjobs ON jobs.id=userjobs.jobID \
     INNER JOIN users ON users.id=userjobs.userID \
-    WHERE jobs.title='"+jobTitle+"'" 
+    WHERE jobs.id='"+jobID+"'" 
     ,
     function(results){
       return callback(results)
     }
   )
+}
+
+db.fetchJobs = function(req, res, callback){
+  db.getJobs(function(jobs){
+    var completeQueries = 0;
+    _.each(jobs, function(job){
+      job.coworkers = [];
+      db.getCoworkers(function(coworkers){
+        job.coworkers=coworkers;
+        //Pseudo promise to ensure all queries are run before response is sent
+        completeQueries++
+        if (completeQueries === jobs.length) {
+          if(req.body.username) {
+            var results = [];
+            var username = req.body.username;
+            _.each(jobs, function(job){
+              _.each(job.coworkers, function(coworker){
+                if(coworker.username === username){
+                  results.push(job)
+                }
+              }) 
+            })
+            callback(results)
+          } else {
+            callback(jobs)
+          }
+        }
+      }, job.id)
+    })
+  }, req.body.filter, req.body.value)
 }
 
