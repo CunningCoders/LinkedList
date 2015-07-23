@@ -159,7 +159,7 @@ db.getJobs = function(callback, filter, value){
       }
     )
   } else {
-    console.log('filter : '+filter+' value : '+value)
+    // console.log("SELECT * FROM jobs WHERE "+filter+" = '"+value+"'")
     requestDB(
       "SELECT * FROM jobs WHERE "+filter+" = '"+value+"'",
       function(results){ 
