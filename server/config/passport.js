@@ -1,6 +1,7 @@
 var LocalStrategy = require('passport-local').Strategy;
 var User = require('../app/models/user');
 
+
 module.exports = function(passport) {
 
 
@@ -16,7 +17,7 @@ module.exports = function(passport) {
 
 
 	passport.use('local-signup', new LocalStrategy({
-		usernameField: 'email',
+		emailField: 'email',
 		passwordField: 'password',
 		passReqToCallback: true
 	},
@@ -26,7 +27,7 @@ module.exports = function(passport) {
 			This is MongoDB/Mongoose query I used for testing - sub 
 			out for Postgres in Production
 			***********************************************************/
-			User.findOne({'local.username': email}, function(err, user){
+			User.findOne({'local.email': email}, function(err, user){
 				if(err)
 					return done(err);
 				if(user){
@@ -38,7 +39,7 @@ module.exports = function(passport) {
 					Improve by implementing Bcrypt to encrypt the data 
 					with salt
 					***************************************************/
-					newUser.local.username = email;
+					newUser.local.email = email;
 					newUser.local.password = password;
 
 					newUser.save(function(err){
@@ -53,7 +54,7 @@ module.exports = function(passport) {
 	}));
 
 	passport.use('local-login', new LocalStrategy({
-			usernameField: 'email',
+			emailField: 'email',
 			passwordField: 'password',
 			passReqToCallback: true
 		},
@@ -63,7 +64,7 @@ module.exports = function(passport) {
 			This is MongoDB/Mongoose query I used for testing - sub 
 			out for Postgres in Production
 			***********************************************************/
-				User.findOne({ 'local.username': email}, function(err, user){
+				User.findOne({ 'local.email': email}, function(err, user){
 					if(err)
 						return done(err);
 					if(!user)
