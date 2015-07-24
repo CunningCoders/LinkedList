@@ -52,13 +52,7 @@ var requestDB = function(queryStr, callback) {
   
 var initUserTable = function() {
   queryDB(
-    'CREATE TABLE users(\
-      id SERIAL PRIMARY KEY, \
-      username VARCHAR(20) NOT NULL UNIQUE, \
-      password VARCHAR(20) NOT NULL, \
-      skills VARCHAR(100) NOT NULL,  \
-      gitHub_ID INTEGER UNIQUE, \
-      description VARCHAR(255))',
+    'CREATE TABLE users(id SERIAL PRIMARY KEY, username VARCHAR(20) NOT NULL UNIQUE, password VARCHAR(20) NOT NULL, userskills VARCHAR(100) NOT NULL, gitHub_ID INTEGER UNIQUE, userdescription VARCHAR(255));',
     function(){
       console.log('Creating User Table')
       db.initJobsTable()
@@ -68,12 +62,7 @@ var initUserTable = function() {
 
 db.initJobsTable = function() {
   queryDB(
-    'CREATE TABLE jobs(\
-      id SERIAL PRIMARY KEY, \
-      title VARCHAR(20) NOT NULL UNIQUE, \
-      ownerID INTEGER references users(id), \
-      description VARCHAR(255), \
-      skills VARCHAR(100))',
+    'CREATE TABLE jobs(id SERIAL PRIMARY KEY, title VARCHAR(20) NOT NULL UNIQUE, ownerID INTEGER references users(id), description VARCHAR(255), skills VARCHAR(100));',
     function(){
       console.log('Creating Jobs Table')
       db.initUserJobsTable()  
@@ -83,11 +72,7 @@ db.initJobsTable = function() {
   
 db.initUserJobsTable = function() {
   queryDB(
-    'CREATE TABLE userjobs(\
-      id SERIAL PRIMARY KEY, \
-      userID INTEGER references users(id), \
-      jobID INTEGER references jobs(id), \
-      status varchar(10))',
+    'CREATE TABLE userjobs(id SERIAL PRIMARY KEY, userID INTEGER references users(id), jobID INTEGER references jobs(id), status varchar(10));',
     function(){console.log('Creating UserJobs Table')}
   )
 } 
@@ -153,7 +138,8 @@ db.updateUserJob = function(userjob) {
 db.getJobs = function(callback, filter, value){
   if (filter === undefined) {
     requestDB(
-      "SELECT * FROM jobs",
+      // "SELECT j.title, j.description, j.skills, uj.status, u.username FROM jobs j JOIN userjobs uj ON uj.jobID=j.id JOIN users u ON u.id=uj.userID;",
+      "SELECT *FROM jobs JOIN userjobs ON userjobs.jobID=jobs.id JOIN users ON users.id=userjobs.userID;",
       function(results){ 
         return callback(results)
       }
@@ -161,7 +147,7 @@ db.getJobs = function(callback, filter, value){
   } else {
     // console.log("SELECT * FROM jobs WHERE "+filter+" = '"+value+"'")
     requestDB(
-      "SELECT * FROM jobs WHERE "+filter+" = '"+value+"'",
+      "SELECT * FROM jobs JOIN userjobs ON userjobs.jobID=jobs.id JOIN users ON users.id=userjobs.userID WHERE "+filter+" = '"+value+"'",
       function(results){ 
         return callback(results)
       }

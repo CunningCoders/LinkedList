@@ -1,19 +1,20 @@
 var User = require('./models/user');
 module.exports = function(app, passport){
 
-	app.get('/', function(req, res){
-		res.render('index.ejs');
-	});
+	// app.get('/', function(req, res){
+	// 	res.render('index.ejs');
+	// });
 
 	/******************************************************************
 	Login
 	******************************************************************/
-	app.get('/login', function(req, res){
-		res.render('login.ejs', { message: req.flash('loginMessage') });
+	app.get('/signin', function(req, res){
+		//temporary fix for local testing...
+		res.sendFile(__dirname.substr(0,38)+'/client/auth.html');
 	});
-	app.post('/login', passport.authenticate('local-login', {
-		successRedirect: '/profile',
-		failureRedirect: '/login',
+	app.post('/signin', passport.authenticate('local-login', {
+		successRedirect: '/',
+		failureRedirect: '/signin',
 		failureFlash: true
 	}));
 
@@ -21,29 +22,21 @@ module.exports = function(app, passport){
 	Signup
 	******************************************************************/
 	app.get('/signup', function(req, res){
-		res.render('signup.ejs', { message: req.flash('signupMessage') });
+		res.sendFile(__dirname.substr(0,38)+'/client/auth.html');
 	});
 
 	app.post('/signup', passport.authenticate('local-signup', {
-		successRedirect: '/',
+		successRedirect: '/signin',
 		failureRedirect: '/signup',
 		failureFlash: true
 	}));
-
-	/******************************************************************
-	Profile
-	******************************************************************/
-	app.get('/profile', isLoggedIn, function(req, res){
-		res.render('profile.ejs', { user: req.user });
-	});
-
 
 	/******************************************************************
 	Logout
 	******************************************************************/
 	app.get('/logout', function(req, res){
 		req.logout();
-		res.redirect('/');
+		res.redirect('/signin');
 	})
 };
 

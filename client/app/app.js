@@ -16,8 +16,8 @@ angular.module('app', ['ui.router'])
       controller: 'findJobsController',
       resolve: {
         jobs: ['$http', function($http){
-          console.log('Trying to GET, findJobs')
-          return $http({method: 'GET', url: '/jobs'});
+          console.log('Trying to POST, findJobs')
+          return $http({method: 'POST', url: '/jobs'});
         }]
       }
     })
@@ -42,8 +42,8 @@ angular.module('app', ['ui.router'])
       controller: 'homepageController',
       resolve: {
         jobs: ['$http', function($http){
-          console.log('Trying to GET, homepage')
-          return $http({method: 'GET', url: '/jobs'});
+          console.log('Trying to POST, homepage')
+          return $http({method: 'POST', url: '/jobs'});
         }]
       }
     })

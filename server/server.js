@@ -4,7 +4,7 @@ var port = 3000;
 
 var cookieParser = require('cookie-parser');
 var session = require('express-session');
-var mongoose = require('mongoose')
+// var mongoose = require('mongoose')
 //Morgan logs http request to the console - this was pretty handy in debugging
 var morgan = require('morgan'); 
 var bodyParser = require('body-parser');
