@@ -5,8 +5,8 @@ angular.module('app')
     title: '',
     description: '',
     skills: [],
-    status: 'confirmed',
-    owner: 'John'
+    status: 'pending',
+    owner: 'Zach' //This should pull from credentials after signing in.
   };
 	
 	$scope.processForm = function(){

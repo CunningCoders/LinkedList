@@ -185,11 +185,9 @@ db.getUserJobs = function(callback, username) {
 }
 
 db.getCoworkers = function(callback, jobTitle) {
-  requestDB(
-    "SELECT username FROM users INNER JOIN userjobs uj ON uj.jobid=(SELECT id FROM jobs WHERE title='"+jobTitle+"');" 
-    ,
+  requestDB("select username from users join userjobs on userjobs.userid=users.id join jobs on userjobs.jobid=jobs.id where jobs.title='"+jobTitle+"';",
     function(results){
-      return callback(results)
+      callback(results)
     }
   )
 }
