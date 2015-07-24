@@ -98,10 +98,9 @@ db.addUser = function(user, callback) {
 db.addJob = function(job, callback) {
   queryDB(
     "INSERT INTO jobs (title, ownerID, description, skills) VALUES \
-    ('"+job.title+"',"+"(SELECT id FROM users WHERE username='"+job.owner+"')"+",'"+job.description+"',\
+    ('"+job.title+"',"+"(SELECT id FROM users WHERE username='"+job.owner.toLowerCase()+"')"+",'"+job.description+"',\
     '"+job.skills+"')",
     function(){
-      console.log('Adding Job')
       callback()
     }
   )
