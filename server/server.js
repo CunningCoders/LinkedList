@@ -36,12 +36,9 @@ app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
 app.use(flash()); // use connect-flash for flash messages stored in session
 
-//This is the view engine - may need to change depending on front end implementation
-// app.set('view engine', 'ejs');
+//Serve up the LinkedList page
 
-app.get('/', function(req, res){
-  res.sendFile(path.join(__dirname+'/../client/index.html'));
-})
+app.use(express.static('client'))
 
 //If the request contains 
 app.post('/jobs', function(req,res){
