@@ -59,11 +59,11 @@ function isLoggedIn(req, res, next) {
 	res.redirect('/login');
 }
 
-	// app.get('/:username/:password', function(req, res){
+	// app.get('/:email/:password', function(req, res){
 	// 	var newUser = new User();
-	// 	newUser.local.username = req.params.username;
+	// 	newUser.local.email = req.params.email;
 	// 	newUser.local.password = req.params.password;
-	// 	console.log(newUser.local.username + " " + newUser.local.password);
+	// 	console.log(newUser.local.email + " " + newUser.local.password);
 	// 	newUser.save(function(err){
 	// 		if(err)
 	// 			throw err;
