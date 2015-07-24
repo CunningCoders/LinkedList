@@ -109,7 +109,7 @@ db.addJob = function(job, callback) {
 db.addUserJob = function(username, jobTitle, status) {
   queryDB(
     "INSERT INTO userjobs (userID, jobID, status) VALUES \
-    ((SELECT id FROM users WHERE username='"+username+"'), \
+    ((SELECT id FROM users WHERE username='"+username.toLowerCase()+"'), \
      (SELECT id FROM jobs WHERE title='"+jobTitle+"'), '"+status+"')"
   )
 }
