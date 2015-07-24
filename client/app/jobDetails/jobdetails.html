@@ -3,7 +3,7 @@
   <div class='owner'><h5>{{ project.owner }}</h5></div>
   <div class='description'>{{ project.description }}</div>
   <h4>Collaborators</h4>
-  <div ng-repeat='person in coworkers'>{{ person }}</div>
+  <div ng-repeat='person in coworkers'>{{ person.username }}</div>
   <h4>Skills</h4>
   <div ng-repeat='thing in skills'>{{ thing }}</div>
 </div>

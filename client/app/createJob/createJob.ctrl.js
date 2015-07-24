@@ -5,8 +5,8 @@ angular.module('app')
     title: '',
     description: '',
     skills: [],
-    status: 'pending',
-    owner: 'Zach'
+    status: 'confirmed',
+    owner: 'John'
   };
 	
 	$scope.processForm = function(){
