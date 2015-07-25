@@ -47,15 +47,13 @@ app.post('/jobs', function(req,res){
   })
 })
 
-// app.post('/ownedjobs', function(req,res){
-//   req.body.filter="ownerID";
-//   req.body.value="(SELECT id FROM users WHERE username='"+req.body.username+"')";
-//   console.log(req.body.value)
-//   db.fetchJobs(req, res, function(results){
-//     console.log(results)
-//     res.end(JSON.stringify(results));
-//   })
-// })
+app.post('/ownedjobs', function(req,res){
+  req.body.filter="ownerID";
+  req.body.value="(SELECT id FROM users WHERE username='"+req.body.owner+"')";
+  db.fetchJobs(req,res, function(results){
+    res.end(JSON.stringify(results));
+  })
+})
 
 
 require('./app/routes.js')(app, passport);

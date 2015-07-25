@@ -52,7 +52,13 @@ var requestDB = function(queryStr, callback) {
   
 var initUserTable = function() {
   queryDB(
-    'CREATE TABLE users(id SERIAL PRIMARY KEY, username VARCHAR(20) NOT NULL UNIQUE, password VARCHAR(20) NOT NULL, userskills VARCHAR(100) NOT NULL, gitHub_ID INTEGER UNIQUE, userdescription VARCHAR(255));',
+    'CREATE TABLE users(\
+      id SERIAL PRIMARY KEY, \
+      username VARCHAR(20) NOT NULL UNIQUE, \
+      password VARCHAR(20) NOT NULL, \
+      skills VARCHAR(100) NOT NULL,  \
+      gitHub_ID INTEGER UNIQUE, \
+      description VARCHAR(255))',
     function(){
       console.log('Creating User Table')
       db.initJobsTable()
@@ -62,7 +68,12 @@ var initUserTable = function() {
 
 db.initJobsTable = function() {
   queryDB(
-    'CREATE TABLE jobs(id SERIAL PRIMARY KEY, title VARCHAR(20) NOT NULL UNIQUE, ownerID INTEGER references users(id), description VARCHAR(255), skills VARCHAR(100), status varchar(10));',
+       'CREATE TABLE jobs(\
+      id SERIAL PRIMARY KEY, \
+      title VARCHAR(20) NOT NULL UNIQUE, \
+      ownerID INTEGER references users(id), \
+      description VARCHAR(255), \
+      skills VARCHAR(100))',
     function(){
       console.log('Creating Jobs Table')
       db.initUserJobsTable()  
@@ -72,7 +83,11 @@ db.initJobsTable = function() {
   
 db.initUserJobsTable = function() {
   queryDB(
-    'CREATE TABLE userjobs(id SERIAL PRIMARY KEY, userID INTEGER references users(id), jobID INTEGER references jobs(id));',
+    'CREATE TABLE userjobs(\
+      id SERIAL PRIMARY KEY, \
+      userID INTEGER references users(id), \
+      jobID INTEGER references jobs(id), \
+      status varchar(10))',
     function(){console.log('Creating UserJobs Table')}
   )
 } 
@@ -98,7 +113,7 @@ db.addUser = function(user, callback) {
 db.addJob = function(job, callback) {
   queryDB(
     "INSERT INTO jobs (title, ownerID, description, skills, status) VALUES \
-    ('"+job.title+"',"+"(SELECT id FROM users WHERE username='"+job.owner.toLowerCase()+"')"+",'"+job.description+"',\
+    ('"+job.title+"',"+"(SELECT id FROM users WHERE username='"+job.owner+"')"+",'"+job.description+"',\
     '"+job.skills+"','"+job.status+"')",
     function(){
       callback()
@@ -109,7 +124,7 @@ db.addJob = function(job, callback) {
 db.addUserJob = function(username, jobTitle, status) {
   queryDB(
     "INSERT INTO userjobs (userID, jobID) VALUES \
-    ((SELECT id FROM users WHERE username='"+username.toLowerCase()+"'), \
+    ((SELECT id FROM users WHERE username='"+username+"'), \
      (SELECT id FROM jobs WHERE title='"+jobTitle+"'))"
   )
 }
@@ -144,8 +159,8 @@ db.getJobs = function(callback, filter, value){
       }
     )
   } else {
-    // console.log("SELECT * FROM jobs WHERE "+filter+" = '"+value+"'")
     requestDB(
+      "SELECT * FROM jobs JOIN userjobs ON userjobs.jobID=jobs.id JOIN users ON users.id=userjobs.userID WHERE "+filter+" = '"+value+"'",
       "SELECT * FROM jobs JOIN userjobs ON userjobs.jobID=jobs.id JOIN users ON users.id=userjobs.userID WHERE "+filter+" = '"+value+"'",
       function(results){ 
         return callback(results)
@@ -184,10 +199,7 @@ db.getUserJobs = function(callback, username) {
   )
 }
 
-db.getCoworkers = function(callback, jobTitle) {
-  requestDB("select username from users join userjobs on userjobs.userid=users.id join jobs on userjobs.jobid=jobs.id where jobs.title='"+jobTitle+"';",
     function(results){
-      callback(results)
     }
   )
 }
@@ -217,7 +229,6 @@ db.fetchJobs = function(req, res, callback){
             callback(jobs)
           }
         }
-      }, job.title)
     })
   }, req.body.filter, req.body.value)
 }
