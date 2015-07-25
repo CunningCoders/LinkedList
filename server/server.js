@@ -55,6 +55,22 @@ app.post('/ownedjobs', function(req,res){
   })
 })
 
+app.post('/signup', function(req, res){
+  db.addUser(req.body, function(){
+    res.send(200)
+  })
+})
+
+app.post('/signin', function(req, res){
+  db.getUsers(function(user){
+    if (req.body.password === user[0].password) {
+      console.log("Valid login")
+    } else {
+      console.log("Invalid login")
+    }
+  }, 'username', req.body.username)
+})
+
 
 require('./app/routes.js')(app, passport);
 

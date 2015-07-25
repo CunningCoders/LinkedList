@@ -173,14 +173,14 @@ db.getUsers = function(callback, filter, value){
   if (filter === undefined) {
     requestDB(
       "SELECT * FROM users",
-      function(results){ 
+      function(results){
         return callback(results)
       }
     )
   } else {
     requestDB(
       "SELECT * FROM users WHERE "+filter+" = '"+value+"'",
-      function(results){ 
+      function(results){
         return callback(results)
       }
     )
