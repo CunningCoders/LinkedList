@@ -38,6 +38,7 @@ var queryDB = function(queryStr, callback) {
 
 //Queries server and calls callback on results
 var requestDB = function(queryStr, callback) {
+  console.log(queryStr)
   var connectionString = process.env.DATABASE_URL || 'postgres://localhost:5432/linkedlist';
   var client = new pg.Client(connectionString);
   client.connect();
@@ -159,9 +160,8 @@ db.getJobs = function(callback, filter, value){
       }
     )
   } else {
-    // console.log("SELECT * FROM jobs WHERE "+filter+" = '"+value+"'")
     requestDB(
-      "SELECT * FROM jobs WHERE "+filter+" = '"+value+"'",
+      "SELECT * FROM jobs WHERE "+filter+" = "+value,
       function(results){ 
         return callback(results)
       }
@@ -213,6 +213,7 @@ db.getCoworkers = function(callback, jobID) {
 }
 
 db.fetchJobs = function(req, res, callback){
+  //console.log(req.body.value)
   db.getJobs(function(jobs){
     var completeQueries = 0;
     _.each(jobs, function(job){
