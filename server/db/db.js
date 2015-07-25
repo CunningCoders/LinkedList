@@ -73,7 +73,7 @@ db.initJobsTable = function() {
       title VARCHAR(20) NOT NULL UNIQUE, \
       ownerID INTEGER references users(id), \
       description VARCHAR(255), \
-      skills VARCHAR(100))',
+      skills VARCHAR(100), status varchar(10))',
     function(){
       console.log('Creating Jobs Table')
       db.initUserJobsTable()  
@@ -161,7 +161,6 @@ db.getJobs = function(callback, filter, value){
   } else {
     requestDB(
       "SELECT * FROM jobs JOIN userjobs ON userjobs.jobID=jobs.id JOIN users ON users.id=userjobs.userID WHERE "+filter+" = '"+value+"'",
-      "SELECT * FROM jobs JOIN userjobs ON userjobs.jobID=jobs.id JOIN users ON users.id=userjobs.userID WHERE "+filter+" = '"+value+"'",
       function(results){ 
         return callback(results)
       }
@@ -199,7 +198,16 @@ db.getUserJobs = function(callback, username) {
   )
 }
 
+db.getCoworkers = function(callback, jobID) {
+  console.log('test')
+  requestDB(
+    "SELECT users.username, userjobs.status, userjobs.jobID, userjobs.userID \
+    FROM jobs INNER JOIN userjobs ON jobs.id=userjobs.jobID \
+    INNER JOIN users ON users.id=userjobs.userID \
+    WHERE jobs.id='"+jobID+"'" 
+    ,
     function(results){
+      return callback(results)
     }
   )
 }
@@ -229,6 +237,7 @@ db.fetchJobs = function(req, res, callback){
             callback(jobs)
           }
         }
+      }, job.id)
     })
   }, req.body.filter, req.body.value)
 }

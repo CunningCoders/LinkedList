@@ -63,10 +63,12 @@ app.post('/signup', function(req, res){
 
 app.post('/signin', function(req, res){
   db.getUsers(function(user){
-    if (req.body.password === user[0].password) {
+    if (!!user.length && req.body.password === user[0].password) {
       console.log("Valid login")
+      res.send(200)
     } else {
       console.log("Invalid login")
+      res.send(404)
     }
   }, 'username', req.body.username)
 })
