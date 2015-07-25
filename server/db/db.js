@@ -38,7 +38,6 @@ var queryDB = function(queryStr, callback) {
 
 //Queries server and calls callback on results
 var requestDB = function(queryStr, callback) {
-  // console.log(queryStr)
   var connectionString = process.env.DATABASE_URL || 'postgres://localhost:5432/linkedlist';
   var client = new pg.Client(connectionString);
   client.connect();
