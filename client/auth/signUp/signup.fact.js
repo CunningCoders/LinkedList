@@ -1,12 +1,13 @@
 angular.module('auth')
 
 .factory('signUpFactory', function(){
+  auth.signup = function() {	
     $http({
         method: 'POST',
         url: '/signup',
         data: "message=" + message,
         headers: {'Content-Type': 'application/json'}
-});
+    });
     .success(function(data) {
         console.log(data);
 
@@ -18,6 +19,8 @@ angular.module('auth')
       // if successful, bind success message to message
         $scope.message = data.message;
     }
-  });
+    
+    });
+  }
 };
 
