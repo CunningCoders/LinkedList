@@ -38,7 +38,7 @@ var queryDB = function(queryStr, callback) {
 
 //Queries server and calls callback on results
 var requestDB = function(queryStr, callback) {
-  console.log(queryStr)
+  // console.log(queryStr)
   var connectionString = process.env.DATABASE_URL || 'postgres://localhost:5432/linkedlist';
   var client = new pg.Client(connectionString);
   client.connect();
@@ -173,14 +173,14 @@ db.getUsers = function(callback, filter, value){
   if (filter === undefined) {
     requestDB(
       "SELECT * FROM users",
-      function(results){ 
+      function(results){
         return callback(results)
       }
     )
   } else {
     requestDB(
       "SELECT * FROM users WHERE "+filter+" = '"+value+"'",
-      function(results){ 
+      function(results){
         return callback(results)
       }
     )
@@ -213,7 +213,6 @@ db.getCoworkers = function(callback, jobID) {
 }
 
 db.fetchJobs = function(req, res, callback){
-  //console.log(req.body.value)
   db.getJobs(function(jobs){
     var completeQueries = 0;
     _.each(jobs, function(job){
