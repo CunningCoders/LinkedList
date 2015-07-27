@@ -1,7 +1,6 @@
 var db = require('./db.js')
 var _ = require('underscore')
 
-
 var populate = function(){
   db.addUser({
     username: 'colin',
@@ -69,21 +68,6 @@ var testUpUserjobs = function(){
 
   })
 }
-// db.initDB()
-populate()
 
-
-
-// db.getCoworkers(
-//   function(a){
-//     console.log(a)
-//   }, 'Mega Dev'
-// )
-// testUpUser()
-// testUpUserjobs()
-// db.getUserJobs(function(a){
-//   console.log(a)
-// },'Colin')
-
-
-// db.getJobs(function(a){console.log(a)});
+db.initDB()
+// populate()

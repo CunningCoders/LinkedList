@@ -19,8 +19,10 @@ db.initDB = function() {
   }); 
 }
 
-//Queries server and calls callback once done
+//Queries server and calls callback once done. This function is for queries where you don't
+//expect a response from the database.
 var queryDB = function(queryStr, callback) {
+  console.log(queryStr)
   callback = callback || function(){}
   var connectionString = process.env.DATABASE_URL || 'postgres://localhost:5432/linkedlist';
   var client = new pg.Client(connectionString);
@@ -36,7 +38,7 @@ var queryDB = function(queryStr, callback) {
   });
 }
 
-//Queries server and calls callback on results
+//Queries server and calls callback on results from your query. 
 var requestDB = function(queryStr, callback) {
   var connectionString = process.env.DATABASE_URL || 'postgres://localhost:5432/linkedlist';
   var client = new pg.Client(connectionString);
@@ -84,6 +86,7 @@ db.resetDB = function() {
   )
 }
 
+//Adds a user to the database, expects user to be an object. Callback is called once the user is added.
 db.addUser = function(user, callback) {
   queryDB(
     "INSERT INTO users (username, password, userskills, GitHub_ID, userdescription) \
@@ -95,6 +98,7 @@ db.addUser = function(user, callback) {
   )
 }
 
+//Adds a job to the database, expects job to be an object. Callback is called once the job is added.
 db.addJob = function(job, callback) {
   queryDB(
     "INSERT INTO jobs (title, ownerID, description, skills, status) VALUES \
@@ -106,6 +110,7 @@ db.addJob = function(job, callback) {
   )
 }
 
+//Describes the relationship between a user and a job. 
 db.addUserJob = function(username, jobTitle, status) {
   queryDB(
     "INSERT INTO userjobs (userID, jobID) VALUES \
@@ -114,18 +119,23 @@ db.addUserJob = function(username, jobTitle, status) {
   )
 }
 
+//Updates a job based on the unique job id. Not currently used by the server
 db.updateJob = function(job) {
   queryDB(
     "UPDATE jobs SET title='"+job.title+"'\
     , description='"+job.description+"', skills='"+job.skills+"' WHERE jobs.id="+job.id, 
     function(){console.log('Update Complete')})
 }
+
+//Updates a user based on the unique user id. Not currently used by the server
 db.updateUser = function(user) {
   queryDB(
     "UPDATE users SET skills='"+user.skills+"', gitHub_ID="+user.gitHub_ID+", \
      description='"+user.description+"' WHERE users.id="+user.id, 
     function(){console.log("Update Complete")})
 }
+
+//Updates a userjob based on the unique userjob id. Not currently used by the server
 db.updateUserJob = function(userjob) {
   queryDB(
     "UPDATE userjobs SET userID=(SELECT id FROM users WHERE username='"+userjob.username+"'),\
@@ -134,17 +144,17 @@ db.updateUserJob = function(userjob) {
     function(){console.log("Update Complete")})
 }
 
+//Fetchs jobs from the server, filter can be any table column, value can be a desired value
+//that you are filtering for, such as job title. If filter is blank it selects all jobs.
 db.getJobs = function(callback, filter, value){
   if (filter === undefined) {
     requestDB(
-      // "SELECT jobs.title, jobs.description, jobs.skills, userjobs.status, users.username FROM jobs INNER JOIN users ON users.id=jobs.ownerid INNER JOIN userjobss ON jobs.ownerid=userjobs.userid;",
       "SELECT * FROM jobs INNER JOIN users ON users.id=jobs.ownerid",
       function(results){ 
         return callback(results)
       }
     )
   } else {
-    // console.log("SELECT * FROM jobs WHERE "+filter+" = '"+value+"'")
     requestDB(
       "SELECT * FROM jobs JOIN userjobs ON userjobs.jobID=jobs.id JOIN users ON users.id=userjobs.userID WHERE "+filter+" = '"+value+"'",
       function(results){ 
@@ -154,6 +164,8 @@ db.getJobs = function(callback, filter, value){
   }
 }
 
+//Fetchs users from the server, filter can be any table column, value can be a desired value
+//that you are filtering for, such as username. If filter is blank it selects all users.
 db.getUsers = function(callback, filter, value){
   if (filter === undefined) {
     requestDB(
@@ -172,6 +184,7 @@ db.getUsers = function(callback, filter, value){
   }
 }
 
+// Gets the jobs associated with a specific username. Runs callback on the results.
 db.getUserJobs = function(callback, username) {
   requestDB(
     "SELECT userjobs.userID, jobs.title, jobs.description, jobs.ownerID, jobs.skills, userjobs.status \
@@ -184,6 +197,7 @@ db.getUserJobs = function(callback, username) {
   )
 }
 
+//Gets everyone associated with a specific job title from the userjobs table.
 db.getCoworkers = function(callback, jobTitle) {
   requestDB("select username from users join userjobs on userjobs.userid=users.id join jobs on userjobs.jobid=jobs.id where jobs.title='"+jobTitle+"';",
     function(results){
@@ -192,6 +206,9 @@ db.getCoworkers = function(callback, jobTitle) {
   )
 }
 
+//Fetchs all jobs from the database using filter/value of getjobs, then runs get coworkers on
+//each job to populate the coworkers. If req.body has a username key it will return only
+//jobs where that person is a coworker.
 db.fetchJobs = function(req, res, callback){
   db.getJobs(function(jobs){
     var completeQueries = 0;
