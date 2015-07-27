@@ -20,4 +20,12 @@ function. This will initialize the database and tables. Test.js also has a funct
 ```javascript
 populate()
 ```
-that is commented out, but you can run it to add a few users and jobs to the database. If you want to run initDB again you will have to drop the database. You can either use the db.resetDB function or do it manually with psql.
+that is commented out, but you can run it to add a few users and jobs to the database. If you want to run initDB again you will have to drop the database. You can either use the 
+```javascript 
+db.resetDB()
+```
+function or do it manually with psql:
+```sql
+drop database linkedlist
+```
+
