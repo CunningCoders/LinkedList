@@ -46,6 +46,12 @@ app.post('/jobs', function(req,res){
     res.end(JSON.stringify(results));
   })
 })
+app.post('/jobs/create', function (req, res) {
+  db.addJob(req.body, function(results){
+    res.end(JSON.stringify(results));
+    db.addUserJob(req.body.owner, req.body.title, req.body.status);
+  });
+});
 
 // app.post('/ownedjobs', function(req,res){
 //   req.body.filter="ownerID";
