@@ -5,14 +5,10 @@ angular.module('app')
   $scope.editObject = {
       name: "Zack Lee",
       imgSrc: "http://1funny.com/wp-content/uploads/2010/09/surfing-grandma.jpg",
-      from: {
-        city: "houston",
-        state: "texas"
-      },
+      location: "Houston, Texas",
       phone: "7132021535",
       email: "",
-      jobTitle: "ceo",
-      company: "squakermare",
+      jobTitle: "ceo of squakermare",
       description: "just a grandma and her surfboard",
       skills: "surf"
     }
