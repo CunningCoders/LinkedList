@@ -29,6 +29,7 @@ angular.module('app')
     '<button ng-click="disableEditor()">cancel</button>' +
     '</div>' +
     '</span>'
+    //adds an edit button
   return {
     restrict: "A",
     replace: true,
