@@ -29,8 +29,8 @@ app.use(cookieParser());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(bodyParser.json())
 app.use(session({secret: 'anystringoftext',
-				 saveUninitialized: true,
-				 resave: true}));
+         saveUninitialized: true,
+         resave: true}));
 
 app.use(passport.initialize());
 app.use(passport.session()); // persistent login sessions
@@ -53,35 +53,15 @@ app.post('/jobs/create', function (req, res) {
   });
 });
 
-app.post('/jobs/create', function(req,res){
-  db.addJob(req.body, console.log('Job Added'))
-})
-
-app.post('/ownedjobs', function(req,res){
-  req.body.filter="ownerID";
-  req.body.value="(SELECT id FROM users WHERE username='"+req.body.owner+"')";
-  db.fetchJobs(req,res, function(results){
-    res.end(JSON.stringify(results));
-  })
-})
-
-app.post('/signup', function(req, res){
-  db.addUser(req.body, function(){
-    res.send(200)
-  })
-})
-
-app.post('/signin', function(req, res){
-  db.getUsers(function(user){
-    if (!!user.length && req.body.password === user[0].password) {
-      console.log("Valid login")
-      res.send(200)
-    } else {
-      console.log("Invalid login")
-      res.send(404)
-    }
-  }, 'username', req.body.username)
-})
+// app.post('/ownedjobs', function(req,res){
+//   req.body.filter="ownerID";
+//   req.body.value="(SELECT id FROM users WHERE username='"+req.body.username+"')";
+//   console.log(req.body.value)
+//   db.fetchJobs(req, res, function(results){
+//     console.log(results)
+//     res.end(JSON.stringify(results));
+//   })
+// })
 
 
 require('./app/routes.js')(app, passport);
