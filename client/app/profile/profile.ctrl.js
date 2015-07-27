@@ -7,10 +7,9 @@ angular.module('app')
       imgSrc: "http://1funny.com/wp-content/uploads/2010/09/surfing-grandma.jpg",
       location: "Houston, Texas",
       phone: "7132021535",
-      email: "",
-      jobTitle: "ceo of squakermare",
-      description: "just a grandma and her surfboard",
-      skills: "surf"
+      jobTitle: "CEO of SquakerMare",
+      description: "just a grandma and her surfboard lookin for some developers",
+      skills: "Angular, Postgres, Node"
     }
     //a button that can connect to linkedin
 
