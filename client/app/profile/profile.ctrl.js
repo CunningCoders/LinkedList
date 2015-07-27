@@ -5,7 +5,7 @@ angular.module('app')
   $scope.editObject = {
       firstName: "zack",
       lastName: "lee",
-      imgSrc: "",
+      imgSrc: "http://1funny.com/wp-content/uploads/2010/09/surfing-grandma.jpg",
       from: {
         city: "houston",
         state: "texas"
@@ -14,8 +14,8 @@ angular.module('app')
       email: "",
       jobTitle: "ceo",
       company: "squakermare",
-      description: "",
-      skills: ""
+      description: "just a grandma and her surfboard",
+      skills: "surf"
     }
     //a button that can connect to linkedin
 
@@ -26,7 +26,7 @@ angular.module('app')
   var editorTemplate = '' +
     '<div class="click-to-edit">' +
     '<div ng-hide="view.editorEnabled">' +
-    '{{value}} ' +
+
     '<a class="button tiny" ng-click="enableEditor()">Edit</a>' +
     '</div>' +
     '<div ng-show="view.editorEnabled">' +

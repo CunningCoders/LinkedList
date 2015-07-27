@@ -5,6 +5,8 @@
     <title>Linked List</title>
     <script src="bower_components/angular/angular.min.js"></script>
     <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+    <link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="bower_components/bootstrap/dist/css/bootstrap-theme.css">
     <script src="app/app.js"></script>
     <script src="app/createJob/createJob.ctrl.js"></script>
     <script src="app/findJobs/findJobs.ctrl.js"></script>
@@ -13,15 +15,20 @@
     <script src="app/homepage/homepage.ctrl.js"></script>
   </head>
   <body ng-app='app'>
-    <nav>
+    <div id="wrap">
+    <nav class="text-center">
         <div id='linkedlistlogo'>
             <h3><a ui-sref='homepage'>LinkedList</a></h3>
         </div>
-        <a ui-sref='createJob'>Create Job</a>
-        <a ui-sref='findJobs'>Find Job</a>
-        <a ui-sref='profile'>My Profile</a>
+        <a ui-sref='createJob'> <button class="btn-primary"> Create Job</button></a>
+        <a ui-sref='findJobs'> <button class="btn-primary btn-success">Find Job</button></a>
+        <a ui-sref='profile'> <button class="btn-primary btn-info">My Profile</button></a>
     </nav>
     <div ui-view></div>
+    <footer class="footer">
+      copyright CunningCoders 2015. no rights reserved lol
+    </footer>
+  </div>
   </body>
 
 </html>

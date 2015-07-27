@@ -1,4 +1,28 @@
-<div id='container'>
+<div class="jumbotron h4">
+  <div class="container text-center">
+
+
+  <!--shows the values of edited form-->
+  <div class="panel callout">
+    <h2>Values</h2>
+    <p>
+      <strong>Pic:</strong> <img src="{{editObject.imgSrc}}" height="250">
+    </p>
+    <p>
+      <strong>Description:</strong> {{editObject.description}}
+    </p>
+    <p>
+      <strong>First Name:</strong> {{editObject.firstName}} <button class="btn-sm" click-to-edit="editObject.firstName"></button></p>
+    <p>
+      <strong>Last Name:</strong> {{editObject.lastName}}</p>
+    <p>
+      <strong>Phone:</strong> {{editObject.phone}}</p>
+    <p><strong>Location:</strong> {{editObject.from.city}}, {{editObject.from.state}}</p>
+    <p><strong>Current Position:</strong> {{editObject.jobTitle}} of {{editObject.company}}</p>
+    <p><strong>My Skills:</strong> {{editObject.skills}} </p>
+
+
+  </div>
   <div class="field">
     <strong>First Name:</strong>
     <div click-to-edit="editObject.firstName"></div>
@@ -11,16 +35,13 @@
     <strong>Phone:</strong>
     <div click-to-edit="editObject.phone"></div>
   </div>
-
-  <!--shows the values of edited form-->
-  <div class="panel callout">
-    <h2>Values</h2>
-
-    <p>
-      <strong>First Name:</strong> {{editObject.firstName}}</p>
-    <p>
-      <strong>Last Name:</strong> {{editObject.lastName}}</p>
-    <p>
-      <strong>Phone:</strong> {{editObject.phone}}</p>
+  <div class="field">
+    <strong>Change Profile Picture (img url only pls):</strong>
+    <div click-to-edit="editObject.imgSrc"></div>
   </div>
+  <div class="field">
+    <strong>Description:</strong>
+    <div click-to-edit="editObject.description"></div>
+  </div>
+</div>
 </div>
