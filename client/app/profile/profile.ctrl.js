@@ -3,8 +3,7 @@ angular.module('app')
 .controller('profileController', ['$scope' ,function($scope) {
   //if logged in, be allowed to edit
   $scope.editObject = {
-      firstName: "zack",
-      lastName: "lee",
+      name: "Zack Lee",
       imgSrc: "http://1funny.com/wp-content/uploads/2010/09/surfing-grandma.jpg",
       from: {
         city: "houston",
@@ -24,18 +23,17 @@ angular.module('app')
 
 .directive("clickToEdit", function() {
   var editorTemplate = '' +
-    '<div class="click-to-edit">' +
-    '<div ng-hide="view.editorEnabled">' +
-
-    '<a class="button tiny" ng-click="enableEditor()">Edit</a>' +
-    '</div>' +
+    '<span class="click-to-edit">' +
+    '<span ng-hide="view.editorEnabled">' +
+    '<button ng-click="enableEditor()">Edit</button>' +
+    '</span>' +
     '<div ng-show="view.editorEnabled">' +
-    '<input type="text" class="small-12.columns" ng-model="view.editableValue">' +
-    '<a class="button tiny" href="#" ng-click="save()">Save</a>' +
+    '<input type="text" ng-model="view.editableValue">' +
+    '<button href="#" ng-click="save()">Save</button>' +
     ' or ' +
-    '<a class="button tiny" ng-click="disableEditor()">cancel</a>' +
+    '<button ng-click="disableEditor()">cancel</button>' +
     '</div>' +
-    '</div>';
+    '</span>'
   return {
     restrict: "A",
     replace: true,

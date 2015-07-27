@@ -2,46 +2,39 @@
   <div class="container text-center">
 
 
-  <!--shows the values of edited form-->
-  <div class="panel callout">
-    <h2>Values</h2>
-    <p>
-      <strong>Pic:</strong> <img src="{{editObject.imgSrc}}" height="250">
-    </p>
-    <p>
-      <strong>Description:</strong> {{editObject.description}}
-    </p>
-    <p>
-      <strong>First Name:</strong> {{editObject.firstName}} <button class="btn-sm" click-to-edit="editObject.firstName"></button></p>
-    <p>
-      <strong>Last Name:</strong> {{editObject.lastName}}</p>
-    <p>
-      <strong>Phone:</strong> {{editObject.phone}}</p>
-    <p><strong>Location:</strong> {{editObject.from.city}}, {{editObject.from.state}}</p>
-    <p><strong>Current Position:</strong> {{editObject.jobTitle}} of {{editObject.company}}</p>
-    <p><strong>My Skills:</strong> {{editObject.skills}} </p>
+    <!--shows the values of edited form-->
+    <div class="panel callout">
+      <h2>{{editObject.name}} <span class="h4" click-to-edit="editObject.name"></span></h2>
+      <p>
+        <strong>Pic:</strong>
+        <img src="{{editObject.imgSrc}}" height="250">
+        <span click-to-edit="editObject.imgSrc"></span>
+
+      </p>
+      <p>
+        <strong>Description:</strong> {{editObject.description}}
+        <span click-to-edit="editObject.description"></span>
+
+      </p>
+      <p>
+        <strong>Phone:</strong> {{editObject.phone}}
+        <span click-to-edit="editObject.phone"></span>
+      </p>
+      <p>
+        <strong>Location:</strong> {{editObject.from.city}}, {{editObject.from.state}}
+        <span click-to-edit="editObject.lastName"></span>
+      </p>
+      <p>
+        <strong>Current Position:</strong> {{editObject.jobTitle}} of {{editObject.company}}
+        <span click-to-edit="editObject.lastName"></span>
+      </p>
+      <p>
+        <strong>My Skills:</strong> {{editObject.skills}}
+        <span click-to-edit="editObject.lastName"></span>
+      </p>
 
 
+    </div>
+
   </div>
-  <div class="field">
-    <strong>First Name:</strong>
-    <div click-to-edit="editObject.firstName"></div>
-  </div>
-  <div class="field">
-    <strong>Last Name:</strong>
-    <div click-to-edit="editObject.lastName"></div>
-  </div>
-  <div class="field">
-    <strong>Phone:</strong>
-    <div click-to-edit="editObject.phone"></div>
-  </div>
-  <div class="field">
-    <strong>Change Profile Picture (img url only pls):</strong>
-    <div click-to-edit="editObject.imgSrc"></div>
-  </div>
-  <div class="field">
-    <strong>Description:</strong>
-    <div click-to-edit="editObject.description"></div>
-  </div>
-</div>
 </div>
