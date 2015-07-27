@@ -4,8 +4,7 @@ angular.module('app')
 .factory('profileFactory', function() {
   var editObject = [
     {
-      firstName: "zack",
-      lastName: "lee",
+      name: "Zack Lee",
       imgSrc: "http://1funny.com/wp-content/uploads/2010/09/surfing-grandma.jpg",
       from: {
         city: "houston",
