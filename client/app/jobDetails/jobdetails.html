@@ -1,9 +1,11 @@
-<div id='container'>
-  <div class='title'><h3>{{ project.title }}</h3></div>
+<div class="jumbotron h4">
+
+  <div class="container text-center">  <div class='title'><h3>{{ project.title }}</h3></div>
   <div class='owner'><h5>{{ project.owner }}</h5></div>
   <div class='description'>{{ project.description }}</div>
   <h4>Collaborators</h4>
   <div ng-repeat='person in coworkers'>{{ person.username }}</div>
   <h4>Skills</h4>
   <div ng-repeat='thing in skills'>{{ thing }}</div>
+</div>
 </div>
