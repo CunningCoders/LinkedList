@@ -2,7 +2,7 @@
 
   <div class="container text-center">
     <div class = "page-header" id="currentProjects">
-  <h4>Current Projects</h4>
+  <h2>Current Projects</h2>
   <ul class="list-unstyled">
     <li ng-repeat='job in currentProjects'>{{ job.title }}
       <button ng-click='setSelected(this.job)' ui-sref="^.jobDetails">details</button>
@@ -10,7 +10,7 @@
   </ul>
 </div>
 <div class = "page-header" id="pendingProjects">
-  <h4>Pending Projects</h4>
+  <h2>Pending Projects</h2>
   <ul class="list-unstyled">
     <li ng-repeat='job in pendingProjects'>{{ job.title }}
       <button ng-click='setSelected(this.job)' ui-sref="^.jobDetails">details</button>

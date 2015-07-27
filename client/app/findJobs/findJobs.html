@@ -6,7 +6,7 @@
   <br/>
   <label>Search by project name:</label>
   <input type='text' name='nameSearch' placeholder='ex: Awesome' ng-model='nameSearch'>
-  <ul class="list-unstyled">
+  <ul class="list-unstyled h3">
     <li ng-repeat='job in projects | filter:{title: nameSearch, skills: skillSearch}'>
       <strong>{{ job.title }}-- </strong>
       {{ (job.description.length)>50 ? job.description.substring(0,50)+'...' : job.description }}
