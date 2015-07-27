@@ -16,7 +16,7 @@ db.initDB = function() {
     client.end(); 
     initUserTable()
     console.log('Creating Database')
-  });
+  }); 
 }
 
 //Queries server and calls callback once done
