@@ -1,3 +1,4 @@
+//Signin factory for signin page.
 angular.module('auth')
 
 .factory('signInFactory', function(){

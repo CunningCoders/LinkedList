@@ -1,3 +1,5 @@
+//Signup factory for signup page.
+//Instaniates a signup function that posts users' data to the server.
 angular.module('auth')
 
 .factory('signUpFactory', function(){
