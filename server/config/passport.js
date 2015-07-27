@@ -27,6 +27,18 @@ module.exports = function(passport) {
 			This is MongoDB/Mongoose query I used for testing - sub 
 			out for Postgres in Production
 			***********************************************************/
+			/***********************************************************
+			User.findOne is specific to MongoDB, which accepts an object.
+			Sequelize has a similar syntax:
+			User.find({username: username}).success(function(user))
+			This should help with resolving the issue of passport using
+			the postgres db. This resource may help:
+			http://sarabinns.com/tag/passport-js-sequelize-postgresql
+
+			A solution to implement the authentication would be to not use
+			any of the helper query functions found in db.js. Use sequelize 
+			for signup/signin functionality.
+			***********************************************************/
 			User.findOne({'local.email': email}, function(err, user){
 				if(err)
 					return done(err);
@@ -63,6 +75,7 @@ module.exports = function(passport) {
 			/***********************************************************
 			This is MongoDB/Mongoose query I used for testing - sub 
 			out for Postgres in Production
+			See comments line 30-41.
 			***********************************************************/
 				User.findOne({ 'local.email': email}, function(err, user){
 					if(err)
