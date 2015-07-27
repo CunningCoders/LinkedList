@@ -116,7 +116,8 @@ db.addJob = function(job, callback) {
     ('"+job.title+"',"+"(SELECT id FROM users WHERE username='"+job.owner+"')"+",'"+job.description+"',\
     '"+job.skills+"','"+job.status+"')",
     function(){
-      callback()
+      console.log('Adding Job')
+      if (callback !== undefined) {callback()}
     }
   )
 }

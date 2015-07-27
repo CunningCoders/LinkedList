@@ -70,8 +70,8 @@ var testUpUserjobs = function(){
   })
 }
 
-// db.initDB()
-populate()
+db.initDB()
+// populate()
 
 
 

@@ -47,6 +47,10 @@ app.post('/jobs', function(req,res){
   })
 })
 
+app.post('/jobs/create', function(req,res){
+  db.addJob(req.body, console.log('Job Added'))
+})
+
 app.post('/ownedjobs', function(req,res){
   req.body.filter="ownerID";
   req.body.value="(SELECT id FROM users WHERE username='"+req.body.owner+"')";
