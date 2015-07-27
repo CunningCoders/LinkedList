@@ -8,4 +8,16 @@ LinkedList provides web developers with the collaboration tools they need to shi
 Getting started on LinkedList is easy! Simply signup, fill in a couple of basic details about your skills and preferred frameworks, and you are ready to get collaborating! We make it simple so you can spend your time shipping code. 
 
 ##Setting up the Database
-Make sure postgres is installed and running. For local setup run 'node server/db/test.js' to use the db.initDB function. This will initialize the database and tables. Test.js also has a function called populate that is commented out, but you can run it to add a few users and jobs to the database. If you want to run initDB again you will have to drop the database. You can either use the db.resetDB function or do it manually with psql.
+Make sure postgres is installed and running. For local setup run 
+```javascript
+node server/db/test.js
+``` 
+to use the 
+```javascript
+db.initDB()
+```
+function. This will initialize the database and tables. Test.js also has a function called 
+```javascript
+populate()
+```
+that is commented out, but you can run it to add a few users and jobs to the database. If you want to run initDB again you will have to drop the database. You can either use the db.resetDB function or do it manually with psql.
