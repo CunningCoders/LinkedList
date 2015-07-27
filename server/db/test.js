@@ -4,20 +4,20 @@ var _ = require('underscore')
 
 var populate = function(){
   db.addUser({
-    username: 'Colin',
+    username: 'colin',
     password: 'abc',
     skills: 'Javascript, NodeJS, SQL',
     gitHub_ID: 10624139,
     description: "Expert napper",
   },  function(){db.addUser({
-      username: 'Zach',
+      username: 'zach',
       password: 'defg',
       skills: 'Javascript, NodeJS, Hearthstone, Angular',
       gitHub_ID: 10624140,
       description: "Plays some sweet violin.",
       },
       function(){db.addUser({
-      username: 'John',
+      username: 'john',
       password: '1234',
       skills: 'Javascript, NodeJS, Express',
       gitHub_ID: 10624141,
@@ -25,20 +25,20 @@ var populate = function(){
       }, 
   function(){db.addJob({
       title: 'Gosu Dev',
-      owner: 'Colin',
+      owner: 'colin',
       description: 'Take naps, dispense wisdom',
-      skills: 'Backend Analysis, C, Visual Basic',
+      skills: JSON.stringify(['Backend Analysis', 'C', 'Visual Basic']),
     },
   function(){db.addJob({
       title: 'Junior Dev',
-      owner: 'Zach',
+      owner: 'zach',
       description: 'Screw up merges, Drop databases',
-      skills: 'Javascript',
+      skills: JSON.stringify(['Javascript']),
     },
     function(){
-      db.addUserJob('Zach', 'Gosu Dev', 'Pending')
-      db.addUserJob('John', 'Gosu Dev', 'Current')
-      db.addUserJob('Colin', 'Junior Dev', 'Pending')
+      db.addUserJob('zach', 'Gosu Dev', 'Pending')
+      db.addUserJob('john', 'Gosu Dev', 'Current')
+      db.addUserJob('colin', 'Junior Dev', 'Pending')
   })})})})})
 }
 
@@ -69,9 +69,8 @@ var testUpUserjobs = function(){
 
   })
 }
-
-db.initDB()
-// populate()
+// db.initDB()
+populate()
 
 
 

@@ -86,8 +86,8 @@ db.resetDB = function() {
 
 db.addUser = function(user, callback) {
   queryDB(
-    "INSERT INTO users (username, password, skills, GitHub_ID, description) \
-    VALUES ('"+user.username+"','"+user.password+"','"+user.skills+"',"+user.gitHub_ID+",'"+user.description+"')",
+    "INSERT INTO users (username, password, userskills, GitHub_ID, userdescription) \
+    VALUES ('"+user.username.toLowerCase()+"','"+user.password+"','"+user.skills+"',"+user.gitHub_ID+",'"+user.description+"')",
     function(){
       console.log('Adding User')
       callback()
